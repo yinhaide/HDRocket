@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <include
+        android:id="@+id/ic_titlebar"
+        layout="@layout/item_titlebar"
+        android:layout_width="match_parent"
+        tools:layout_height="68dp"/>
+
+    <TextView
+        android:id="@+id/tv_detail"
+        android:layout_centerInParent="true"
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorRocket"/>
+
+</RelativeLayout>

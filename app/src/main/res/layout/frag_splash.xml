@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.de.rocket.ue.layout.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource"
+    android:background="@mipmap/splash">
+
+    <!--<View
+        android:id="@+id/v_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rocket_cl_white"
+        app:layout_heightPercent="10%h"
+        app:layout_marginTopPercent="5%h"
+        app:layout_marginStartPercent="5%w"
+        app:layout_marginEndPercent="2.5%w"/>
+
+    <View
+        android:layout_below="@+id/v_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rocket_cl_white"
+        app:layout_heightPercent="10%h"
+        app:layout_marginTopPercent="5%h"
+        app:layout_marginLeftPercent="5%w"
+        app:layout_marginRightPercent="2.5%w"/>-->
+
+</com.de.rocket.ue.layout.PercentRelativeLayout>

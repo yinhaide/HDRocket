@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <include
+        android:id="@+id/ic_titlebar"
+        layout="@layout/item_titlebar"
+        android:layout_width="match_parent"
+        tools:layout_height="68dp"/>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/ic_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="转场动画"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="动态权限"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_statusbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="状态栏"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="日志管理"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_router"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="路由轨迹"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_crash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="崩溃捕获"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <include
+        android:id="@+id/ic_titlebar"
+        layout="@layout/item_titlebar"
+        android:layout_width="match_parent"
+        tools:layout_height="68dp"/>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/ic_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bt_anim_left_to_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="两个页面一起往左滑动"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_left_to_right_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="进场页面往左入栈"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_right_to_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="两个页面一起往右滑动"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_right_to_left_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="进场页面往右入栈"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_up_to_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="两个页面一起往上滑动"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_up_to_down_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="进场页面往上入栈"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_down_to_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="两个页面一起往下滑动"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/bt_anim_down_to_up_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rocket_round_rocket_pd10"
+            android:textColor="@color/rocket_cl_white"
+            android:text="进场页面往下入栈"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
