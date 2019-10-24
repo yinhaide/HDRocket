@@ -1,4 +1,6 @@
 
+[![Platform](https://img.shields.io/badge/platform-%20Android%20-brightgreen.svg)](https://github.com/yinhaide/Rocket-master/wiki)
+[![characteristic](https://img.shields.io/badge/feature-%20轻量级%20%7C%20稳定%20%20%7C%20强大%20-brightgreen.svg)](https://github.com/yinhaide/Rocket-master/wiki)
 [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # Rocket
