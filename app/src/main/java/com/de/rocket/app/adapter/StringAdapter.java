@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 文档的容器
+ * 单行字符串的容器
  * Created by haide.yin(haide.yin@tcl.com) on 2019/10/16 10:19.
  */
 public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringViewHolder> {

@@ -5,8 +5,6 @@ import android.widget.TextView;
 
 import com.de.rocket.Rocket;
 import com.de.rocket.app.R;
-import com.de.rocket.app.helper.TestHelper;
-import com.de.rocket.app.ue.activity.RoxxActivity;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.ue.injector.BindView;
 import com.de.rocket.ue.injector.Event;
@@ -29,7 +27,6 @@ public class Frag_rocket extends RoFragment {
     public void initViewFinish(View inflateView) {
         initView();
         initConfig();
-        initHelper();
     }
 
     /**
@@ -47,15 +44,6 @@ public class Frag_rocket extends RoFragment {
 
     }
 
-    /**
-     * 初始化Helper
-     */
-    private void initHelper() {
-        TestHelper testHelper = new TestHelper();
-        testHelper.setOnTestListener(() -> {});
-        testHelper.test();
-    }
-
     @Override
     public void onNexts(Object object) {
         if (object instanceof String) {
@@ -70,8 +58,8 @@ public class Frag_rocket extends RoFragment {
      **/
     @Event(value = R.id.tv_right, type = View.OnClickListener.class/*可选参数, 默认是View.OnClickListener.class*/)
     private void toRoxx(View view) {
-        //toAct(RoxxActivity.class,"Frag_roxx_widget","我是Activity之间传递的对象");
-        toAct("com.de.rocket.RoxxActivity","Frag_roxx","我是Activity之间传递的对象");
+        //toAct(RoxxActivity.class,"Frag_roxx_widget","我是显示跳转Activity之间传递的对象");
+        toAct("com.de.rocket.RoxxActivity","Frag_roxx","我是隐式跳转Activity之间传递的对象");
     }
 
     @Event(R.id.bt_animation)
