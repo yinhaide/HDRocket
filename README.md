@@ -1,7 +1,7 @@
 
 # Rocket
 [![Platform](https://img.shields.io/badge/平台-%20Android%20-brightgreen.svg)](https://github.com/yinhaide/Rocket-master/wiki)
-[![Feature](https://img.shields.io/badge/feature-%20轻量级%20%7C%20稳定%20%20%7C%20强大%20-brightgreen.svg)](https://github.com/yinhaide/Rocket-master/wiki)
+[![Feature](https://img.shields.io/badge/特性-%20轻量级%20%7C%20稳定%20%20%7C%20强大%20-brightgreen.svg)](https://github.com/yinhaide/Rocket-master/wiki)
 [![LICENSE](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 采用"单Activity+多Fragment"以及"多模块Activity+多Fragment"的设计模式编写的架构。一个非常轻量级又十分强大的Fragment管理框架。
