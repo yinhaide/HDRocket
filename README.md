@@ -20,7 +20,7 @@
 
 + **页面切换以及页面通讯采用原生的commit以及setArguments，性能开销极小，页面切换流畅无卡顿**
 
-+ **支持Fragment转场动画，提供12基本转场动画**
++ **支持自定义Fragment转场动画**
 
 + **集成动态权限管理，包含必须权限（不允许不走生命周期）以及可选权限**
 
@@ -48,7 +48,7 @@
 
 **4、如何处理转场动画与的Fragment生命周期**
 > 当Fragment中有setCustomAnimations转场动画的时候，做页面切换、页面通讯、内存管理等与生命周期相关的就多了很多的坑。Fragment提供的onCreateAnimation方法，不管有无动画都会走这个方法,并且提供完整的动画生命周期与动画详情。Rocket中充分利用这一点，
-> 很好的规避了转场动画导致的各类难题。
+> 很好的规避了转场动画导致的各类难题。同时，Rocket提供设置转场动画入口给开发者，让开发者随心所欲定制自己的转场动画。
 
 **5、如何实现沉浸式状态栏与正常状态栏的无缝切换**
 > 状态栏有两种形态，显示以及隐藏。隐藏的时候整个页面向上顶满屏幕，带来很严重的突兀感。状态栏依附的是window窗体，在Rocket框架中，因为我们的页面单位是Fragment，也就是说只要一个页面切换状态栏都会导致整个窗体一起变化。
@@ -196,22 +196,25 @@ StatusBarBean statusBar;
 ```
 **2、Fragment-页面切换**
 ```
+注意：下面只提供带全部参数的方法，Rocket提供阶梯式参数的函数
 /**
- * 跳转到新的Fragment
- * @param targetClass 已经注册的Fragment
- */
-toFrag(Class targetClass);
-
-/**
- * 带详细参数跳转到新的Fragment(clearTop = true 时,默认为: isOriginalRemove无效 = true)
+ * 带详细参数跳转到新的Fragment
  * @param targetClass 目标Fragment
  * @param isOriginalRemove 是否要回收内存
  * @param isTargetReload 是否要刷新目标Fragment
  * @param object 跳转携带的参数
  * @param clearTop 清掉目标Fragment在栈位置顶端所有的Fragment
- * @param trAnimation 转场动画
+ * @param animationBean 转场动画
  */
-toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, FRAG_ANIM trAnimation);
+toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, AnimationBean animationBean);
+
+/**
+ * 带详细参数返回（默认无需主动调用，系统自行返回，除非需要自定义返回，需要重写onBackPresss）
+ * @param isTargetReload 刷新目标页面
+ * @param object 传递对象
+ * @param animationBean 转场动画
+ */
+back(boolean isTargetReload, Object object,AnimationBean animationBean);
 
 /**
  * 从Fragment中显示跳转到Activity

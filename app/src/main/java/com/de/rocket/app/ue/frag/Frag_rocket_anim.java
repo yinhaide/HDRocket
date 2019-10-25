@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.de.rocket.app.R;
 import com.de.rocket.app.ue.activity.RoxxActivity;
+import com.de.rocket.bean.AnimationBean;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.ue.injector.BindView;
 import com.de.rocket.ue.injector.Event;
@@ -55,41 +56,41 @@ public class Frag_rocket_anim extends RoFragment {
 
     @Event(R.id.bt_anim_left_to_right)
     private void animLeftToRight(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.LEFT_TOGETHER,FRAG_ANIM.LEFT_TOGETHER);
+        toFrag(Frag_rocket_anim_detail.class,false,true, AnimationBean.createRightTogether(),false,AnimationBean.createLeftTogether());
     }
 
     @Event(R.id.bt_anim_left_to_right_enter)
     private void animLeftToRightEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.LEFT_PUSH,FRAG_ANIM.LEFT_PUSH);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createRightPush(),false,AnimationBean.createLeftPush());
     }
 
     @Event(R.id.bt_anim_right_to_left)
     private void animRightToLeft(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.RIGHT_TOGETHER,FRAG_ANIM.RIGHT_TOGETHER);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createLeftTogether(),false,AnimationBean.createRightTogether());
     }
 
     @Event(R.id.bt_anim_right_to_left_enter)
     private void animRightToLeftEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.RIGHT_PUSH,FRAG_ANIM.RIGHT_PUSH);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createLeftPush(),false,AnimationBean.createRightPush());
     }
 
     @Event(R.id.bt_anim_up_to_down)
     private void animUpToDown(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.TOP_TOGETHER,FRAG_ANIM.TOP_TOGETHER);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createBottomTogether(),false,AnimationBean.createTopTogether());
     }
 
     @Event(R.id.bt_anim_up_to_down_enter)
     private void animUpToDownEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.TOP_PUSH,FRAG_ANIM.TOP_PUSH);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createBottomPush(),false,AnimationBean.createTopPush());
     }
 
     @Event(R.id.bt_anim_down_to_up)
     private void animDownToUp(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.BOTTOM_TOGETHER,FRAG_ANIM.BOTTOM_TOGETHER);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createTopTogether(),false,AnimationBean.createBottomTogether());
     }
 
     @Event(R.id.bt_anim_down_to_up_enter)
     private void animDownToUpEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,FRAG_ANIM.BOTTOM_PUSH,FRAG_ANIM.BOTTOM_PUSH);
+        toFrag(Frag_rocket_anim_detail.class,false,true,AnimationBean.createTopPush(),false,AnimationBean.createBottomPush());
     }
 }
