@@ -240,6 +240,7 @@ public class Rofragment{
 **3、Fragment-吐司**
 ```java
 public class Rofragment{ 
+    
     /**
      * 吐司
      * @param tip 吐司内容
@@ -360,7 +361,8 @@ public class xxfragment{
     /**
      * 绑定ViewHolder(在Adapter中的事例)
      **/
-    public void bindViewHolder(){
+    private void bindViewHolder(){
+        
         /**
          * 绑定ViewHolder,之后可以注解的方式获取绑定viewy以及事件注解.用法如下：
          * ViewHolder(View itemView) {
@@ -403,14 +405,17 @@ public class xxfragment{
 </declare-styleable>
 ```
 **10、Rocket-工具类**
-```
-说明:本类作用是暴露内部接口供外部使用，大量的内部方法将放在这里
-/**
- * 外部写入Log信息
- *
- * @param logString Log信息
- */
-Rocket.writeOuterLog(String logString);
+> 说明:本类作用是暴露内部接口供外部使用，大量的内部方法将放在这里
+```java
+public class Rocket{
+    
+    /**
+     * 外部写入Log信息
+     *
+     * @param logString Log信息
+     */
+    public static writeOuterLog(String logString);
+}
 ```
 
 
