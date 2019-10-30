@@ -80,7 +80,7 @@ dependencies {
 ```
 
 **2、继承RoApplication**
-```
+```java
 public class SampleApplication extends RoApplication {
 
     @Override
@@ -91,7 +91,7 @@ public class SampleApplication extends RoApplication {
 ```
 
 **3、创建Frag_rocket并且继承RoFragment**
-```
+```java
 public class Frag_rocket extends RoFragment {
 
     @Override
@@ -112,8 +112,9 @@ public class Frag_rocket extends RoFragment {
 ```
 
 **4、创建RoxxActivity并且继承RoActivity**
-```
-1、RoxxActivity.class
++ RoxxActivity.class
+```java
+//1、
 public class RoxxActivity extends RoActivity {
 
     //注册Rofrgment
@@ -154,8 +155,8 @@ public class RoxxActivity extends RoActivity {
     }
 }
 ```
-```
-2、activity_main.xml
++ activity_main.xml
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <com.de.rocket.ue.layout.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -174,185 +175,212 @@ public class RoxxActivity extends RoActivity {
 ```
 ## 详细使用说明
 **1、Activity-ActivityParamBean参数**
-```
-//必需，Activity布局的Layout ID
-int layoutId;
-//必需，Activity布局的Layout装Fragment的容器id
-int fragmentContainId;
-//必需，支持的Fragment列表
-Class[] roFragments;
-//Activity恢复是是否从保存的状态中恢复，false的话整个页面重新创建显示第一个Fragment
-boolean isSaveInstanceState;
-//是否用传统自定义的吐司风格，false表示用系统的吐司，系统风格在通知关闭情况也是禁用的
-boolean isToastCustom;
-//是否显示线性栈视图悬浮球
-boolean showViewBall;
-//是否显示框架自定义的崩溃的窗口
-boolean enableCrashWindow;
-//日志配置(mnt/sdcard/Android/data/<package name>/files/rocket/<date>/xx.log)
-RecordBean recordBean;
-//状态栏的属性(沉浸式风格以及颜色配置)
-StatusBarBean statusBar;
+```java
+public class ActivityParamBean{
+    //必需，Activity布局的Layout ID
+    private int layoutId;
+    //必需，Activity布局的Layout装Fragment的容器id
+    private int fragmentContainId;
+    //必需，支持的Fragment列表
+    private Class[] roFragments;
+    //Activity恢复是是否从保存的状态中恢复，false的话整个页面重新创建显示第一个Fragment
+    private boolean isSaveInstanceState;
+    //是否用传统自定义的吐司风格，false表示用系统的吐司，系统风格在通知关闭情况也是禁用的
+    private boolean isToastCustom;
+    //是否显示线性栈视图悬浮球
+    private boolean showViewBall;
+    //是否显示框架自定义的崩溃的窗口
+    private boolean enableCrashWindow;
+    //日志配置(mnt/sdcard/Android/data/<package name>/files/rocket/<date>/xx.log)
+    private RecordBean recordBean;
+    //状态栏的属性(沉浸式风格以及颜色配置)
+    private StatusBarBean statusBar;
+}
 ```
 **2、Fragment-页面切换**
-```
-注意：下面只提供带全部参数的方法，Rocket提供阶梯式参数的函数
-/**
- * 带详细参数跳转到新的Fragment
- * @param targetClass 目标Fragment
- * @param isOriginalRemove 是否要回收内存
- * @param isTargetReload 是否要刷新目标Fragment
- * @param object 跳转携带的参数
- * @param clearTop 清掉目标Fragment在栈位置顶端所有的Fragment
- * @param animationBean 转场动画
- */
-toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, AnimationBean animationBean);
+```java
+//注意：下面只提供带全部参数的方法，Rocket提供阶梯式参数的函数
+public class Rofragment{
+    /**
+     * 带详细参数跳转到新的Fragment
+     * @param targetClass 目标Fragment
+     * @param isOriginalRemove 是否要回收内存
+     * @param isTargetReload 是否要刷新目标Fragment
+     * @param object 跳转携带的参数
+     * @param clearTop 清掉目标Fragment在栈位置顶端所有的Fragment
+     * @param animationBean 转场动画
+     */
+    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, AnimationBean animationBean);
 
-/**
- * 带详细参数返回（默认无需主动调用，系统自行返回，除非需要自定义返回，需要重写onBackPresss）
- * @param isTargetReload 刷新目标页面
- * @param object 传递对象
- * @param animationBean 转场动画
- */
-back(boolean isTargetReload, Object object,AnimationBean animationBean);
+    /**
+     * 带详细参数返回（默认无需主动调用，系统自行返回，除非需要自定义返回，需要重写onBackPresss）
+     * @param isTargetReload 刷新目标页面
+     * @param object 传递对象
+     * @param animationBean 转场动画
+     */
+    public void back(boolean isTargetReload, Object object,AnimationBean animationBean);
 
-/**
- * 从Fragment中显示跳转到Activity
- * @param activityClass 对应的Activity
- * @param targetFragTag 对应的Fragment的SimpleName
- * @param object 携带的数据
- */
-toAct(Class activityClass,String targetFragTag,Object object);
+    /**
+     * 从Fragment中显示跳转到Activity
+     * @param activityClass 对应的Activity
+     * @param targetFragTag 对应的Fragment的SimpleName
+     * @param object 携带的数据
+     */
+    public void toAct(Class activityClass,String targetFragTag,Object object);
 
-/**
- * 从Fragment中隐式跳转到Activity
- * @param action 对应的Activity的Action
- * @param targetFragTag 对应的Fragment的SimpleName
- * @param object 携带的数据
- */
-toAct(String action,String targetFragTag,Object object);
+    /**
+     * 从Fragment中隐式跳转到Activity
+     * @param action 对应的Activity的Action
+     * @param targetFragTag 对应的Fragment的SimpleName
+     * @param object 携带的数据
+     */
+    public void toAct(String action,String targetFragTag,Object object);
+}
 ```
 **3、Fragment-吐司**
-```
-/**
- * 吐司
- * @param tip 吐司内容
- */
-toast(String tip);
+```java
+public class Rofragment{ 
+    /**
+     * 吐司
+     * @param tip 吐司内容
+     */
+    public void toast(String tip);
+}
 ```
 
 **4、Fragment-权限申请**
-```
-/**
- * 主动请求权限，关注每个权限的允许与拒绝情况
- * 注意：权限必须要在AndroidManifest.xml注册才能正常使用
- * @param permissions 权限列表
- * @param permissionListener 回调函数
- * @return 是否已经在AndroidManifest中注册
- */
-needPermissison(String[] permissions, PermissionListener permissionListener);
-
-/**
- * 重写权限申请方法，页面进来必须要先要求权限
- * 必须所有权限都通过才会执行生命周期
- * 如果权限没有全部允许,还想执行生命周期的话，需要在子类调用:super.initPermission(rootView);
- */
-@Override
-String[] initPermission();
+```java
+public class Rofragment{ 
+    
+    /**
+     * 主动请求权限，关注每个权限的允许与拒绝情况
+     * 注意：权限必须要在AndroidManifest.xml注册才能正常使用
+     * @param permissions 权限列表
+     * @param permissionListener 回调函数
+     * @return 是否已经在AndroidManifest中注册
+     */
+    public boolean needPermissison(String[] permissions, PermissionListener permissionListener);
+    
+    /**
+     * 重写权限申请方法，页面进来必须要先要求权限
+     * 必须所有权限都通过才会执行生命周期
+     * 如果权限没有全部允许,还想执行生命周期的话，需要在子类调用:super.initPermission(rootView);
+     */
+    @Override
+    public String[] initPermission();
+}
 ```
 **5、Fragment-APP内部语言国际化**
-```
-/**
- * 读取APP需要缓存的语言
- *
- * @return locale 当前设置的语言
- */
-getSaveLocale();
-
-/**
- * 设置APP需要缓存的语言
- *
- * @param locale 需要设置的语言
- */
-setSaveLocale(Locale locale);
+```java
+public class Rofragment{ 
+    
+    /**
+     * 读取APP需要缓存的语言
+     *
+     * @return locale 当前设置的语言
+     */
+    public Locale getSaveLocale();
+    
+    /**
+     * 设置APP需要缓存的语言
+     *
+     * @param locale 需要设置的语言
+     */
+    public void setSaveLocale(Locale locale);
+}
 ```
 
 **6、Fragment-状态栏切换**
-```
-/**
- * 设置状态栏颜色
- *
- * @param color         状态栏颜色值
- * @param isImmersion   是否是沉浸式风格，隐藏状态栏创建自定义状态栏
- */
-setStatusBarColor(@ColorInt int color,boolean isImmersion);
-
-/**
- * 使指定的View向下Padding偏移一个状态栏高度，留出状态栏空间，主要用于设置沉浸式后,页面顶到顶端有突兀感
- *
- * @param targetView        需要偏移的View
- * @param enable            开启或者关闭
- * @param isPaddingOrMargin 向下偏移是padding还是margin，true的话是padding，false的话是margin
- */
-setOffsetStatusBar(View targetView, boolean enable, boolean isPaddingOrMargin);
+```java
+public class Rofragment{ 
+    
+    /**
+     * 设置状态栏颜色
+     *
+     * @param color         状态栏颜色值
+     * @param isImmersion   是否是沉浸式风格，隐藏状态栏创建自定义状态栏
+     */
+    public void setStatusBarColor(@ColorInt int color,boolean isImmersion);
+    
+    /**
+     * 使指定的View向下Padding偏移一个状态栏高度，留出状态栏空间，主要用于设置沉浸式后,页面顶到顶端有突兀感
+     *
+     * @param targetView        需要偏移的View
+     * @param enable            开启或者关闭
+     * @param isPaddingOrMargin 向下偏移是padding还是margin，true的话是padding，false的话是margin
+     */
+    public void setOffsetStatusBar(View targetView, boolean enable, boolean isPaddingOrMargin);
+}
 ```
 **7、Fragment-子类可以重写的方法**
-```
-/**
- * 是否由内部处理返回事件,默认false,由用户处理
- *
- * @return backAuto
- */
-protected boolean onBackPresss();
-
-/**
- * 从后台进入前台是否要刷新数据,默认false
- *
- * @return isReloadData
- */
-protected boolean isReloadData();
-
-/**
- * Fragment转场动画结束的回调
- *
- * @param  animation 转场动画
- */
-public void onFragAnimationEnd(Animation animation);
+```java
+public class Rofragment{ 
+    
+    /**
+     * 是否由内部处理返回事件,默认false,由用户处理
+     *
+     * @return backAuto
+     */
+    protected boolean onBackPresss();
+    
+    /**
+     * 从后台进入前台是否要刷新数据,默认false
+     *
+     * @return isReloadData
+     */
+    protected boolean isReloadData();
+    
+    /**
+     * Fragment转场动画结束的回调
+     *
+     * @param  animation 转场动画
+     */
+    public void onFragAnimationEnd(Animation animation);
+}
 ```
 **8、Fragment-View注解**
-```
-/**
- * 变量注解
- **/
-@BindView(R.id.tv_right)
-private TextView tvRight;
-
-/**
- * 事件注解
- * 1. 方法必须私有限定,
- * 2. 方法参数形式必须和type对应的Listener接口一致.
- * 3. 注解参数value支持数组: value={id1, id2, id3}
- **/
-@Event(value = R.id.tv_right, type = View.OnClickListener.class/*可选参数, 默认是View.OnClickListener.class*/)
-private void toRoxx(View view);
-
-/**
- * 绑定ViewHolder,之后可以注解的方式获取绑定viewy以及事件注解.用法如下：
- * ViewHolder(View itemView) {
- *   super(itemView);
- *   Rocket.bindViewHolder(this,itemView);//View注解
- * }
- * @param viewHolder viewHolder
- * @param view itemView
- */
-Rocket.bindViewHolder(Object viewHolder, View view);
+```java
+public class xxfragment{ 
+    
+    /**
+     * 变量注解
+     **/
+    @BindView(R.id.tv_right)
+    private TextView tvRight;
+    
+    /**
+     * 事件注解
+     * 1. 方法必须私有限定,
+     * 2. 方法参数形式必须和type对应的Listener接口一致.
+     * 3. 注解参数value支持数组: value={id1, id2, id3}
+     **/
+    @Event(value = R.id.tv_right, type = View.OnClickListener.class/*可选参数, 默认是View.OnClickListener.class*/)
+    private void toRoxx(View view);
+    
+    /**
+     * 绑定ViewHolder(在Adapter中的事例)
+     **/
+    public void bindViewHolder(){
+        /**
+         * 绑定ViewHolder,之后可以注解的方式获取绑定viewy以及事件注解.用法如下：
+         * ViewHolder(View itemView) {
+         *   super(itemView);
+         *   Rocket.bindViewHolder(this,itemView);//View注解
+         * }
+         * @param viewHolder viewHolder
+         * @param view itemView
+         */
+        Rocket.bindViewHolder(viewHolder,view);
+    }
+}
 ```
 
 **9、Layout-百分比布局**
-```
-1、支持的百分比布局
-    PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout
-2、支持的百分比参数
++ 支持的百分比布局
+> PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout
++ 支持的百分比参数
+```xml
+<declare-styleable name="PercentLayout_Layout">
     <attr format="string" name="layout_widthPercent"/>
     <attr format="string" name="layout_heightPercent"/>
     <attr format="string" name="layout_marginPercent"/>
@@ -372,17 +400,17 @@ Rocket.bindViewHolder(Object viewHolder, View view);
     <attr format="string" name="layout_paddingBottomPercent"/>
     <attr format="string" name="layout_paddingLeftPercent"/>
     <attr format="string" name="layout_paddingRightPercent"/>
+</declare-styleable>
 ```
 **10、Rocket-工具类**
 ```
 说明:本类作用是暴露内部接口供外部使用，大量的内部方法将放在这里
-比如：
 /**
  * 外部写入Log信息
  *
  * @param logString Log信息
  */
-writeOuterLog(String logString);
+Rocket.writeOuterLog(String logString);
 ```
 
 
