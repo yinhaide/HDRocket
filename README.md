@@ -382,7 +382,7 @@ Rocket.bindViewHolder(Object viewHolder, View view);
  *
  * @param logString Log信息
  */
-writeOuterLog(Context context,String logString);
+writeOuterLog(String logString);
 ```
 
 
