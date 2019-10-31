@@ -114,7 +114,6 @@ public class Frag_rocket extends RoFragment {
 **4、创建RoxxActivity并且继承RoActivity**
 + RoxxActivity.class
 ```java
-//1、
 public class RoxxActivity extends RoActivity {
 
     //注册Rofrgment
@@ -417,8 +416,6 @@ public class Rocket{
     public static writeOuterLog(String logString);
 }
 ```
-
-
 ## LICENSE
 ````
 Copyright 2019 haide.yin(123302687@qq.com)
