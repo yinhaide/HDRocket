@@ -42,7 +42,7 @@ public class Frag_rocket_anim_detail extends RoFragment {
     }
 
     @Override
-    public boolean onBackPresss(){
+    public boolean onBackPressed(){
         back(false,null,animationBean);
         return true;
     }

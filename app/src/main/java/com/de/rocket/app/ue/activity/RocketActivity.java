@@ -58,9 +58,4 @@ public class RocketActivity extends RoActivity {
     public void onNexts(Object object) {
 
     }
-
-    @Override
-    public boolean onBackClick() {
-        return false;
-    }
 }
