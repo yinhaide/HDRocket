@@ -17,9 +17,9 @@
     <application
         android:name=".app.SampleApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/rocket_rocket"
+        android:icon="@mipmap/rocket_logo"
         android:label="@string/rocket_name"
-        android:roundIcon="@mipmap/rocket_rocket"
+        android:roundIcon="@mipmap/rocket_logo"
         android:supportsRtl="true"
         android:theme="@style/RocketThemeStyle"
         tools:ignore="GoogleAppIndexingWarning">

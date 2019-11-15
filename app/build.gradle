@@ -48,7 +48,7 @@ dependencies {
     api library.v7
     api library.multidex
     api library.recyclerview
-    api(name: 'rocket', ext: 'aar')
+    api(name: 'rocket-v0.0.2', ext: 'aar')
     /* ******* 工程依赖 ******** */
 
     /* ******* 第三方包 ******** */
