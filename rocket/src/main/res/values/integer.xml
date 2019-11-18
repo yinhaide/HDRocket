@@ -1,0 +1,6 @@
+<resources>
+
+    <!--fragment切换动画持续时间-->
+    <integer name="rocket_tr_duraction_fast">300</integer>
+
+</resources>

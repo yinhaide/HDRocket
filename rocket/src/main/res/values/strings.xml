@@ -1,0 +1,12 @@
+<resources>
+    <string name="rocket_name">Rocket</string>
+
+    <string name="rocket_fragment_extend_error">Fragment必须继承RoFragment</string>
+    <string name="rocket_activity_extend_error">Activity必须继承 RoActivity</string>
+    <string name="rocket_object_extend_serializable">Object必须实现序列化接口Serializable</string>
+    <string name="rocket_fragment_not_register">Fragment需要先注册才能使用</string>
+    <string name="rocket_need_layout">我还需要一个容器才能显示</string>
+    <string name="rocket_crash_title">崩溃了</string>
+    <string name="rocket_router_activity">视图栈(Activity)</string>
+    <string name="rocket_router_rocket">视图栈(Rocket)</string>
+</resources>

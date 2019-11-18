@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="rocket_statusbar_view" />
+    <item type="id" name="rocket_global_widget_view" />
+    <item type="id" name="rocket_toast_view" />
+</resources>

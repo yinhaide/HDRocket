@@ -1,4 +1,6 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.yinhaide'
 
 // 导入统一配置项
 def info = rootProject.ext.android
@@ -7,7 +9,6 @@ def library = rootProject.ext.dependencies
 android {
     compileSdkVersion info.compileSdkVersion
     defaultConfig {
-        applicationId "com.de.rocket.app"
         minSdkVersion info.minSdkVersion
         targetSdkVersion info.targetSdkVersion
         versionCode info.versionCode
@@ -15,9 +16,10 @@ android {
         multiDexEnabled info.multiDexEnabled
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -26,30 +28,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    // 指定jniLibs库路径为libs
-    sourceSets {
-        main {
-            jniLibs.srcDir 'libs'
+
+    // 统一限定资源的前缀,防止资源同名导致不可控异常
+    resourcePrefix "${project.name}_"
+
+    // 动态修改aar的名字
+    android.libraryVariants.all { variant ->
+        if(variant.name.equalsIgnoreCase("release")) {
+            variant.outputs.all { output ->
+                def f = output.outputFileName
+                if (f != null && f.endsWith('.aar')) {
+                    def fileName = "rocket-v${defaultConfig.versionName}.aar"
+                    output.outputFileName = fileName
+                }
+            }
         }
     }
 }
 
-//用户加载libs目录下的aar文件(统一将aar文件放在libs目录,api(name: 'rocket', ext: 'aar'))
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-
 dependencies {
-    /* ******* 统一基础包 ******** */
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    // 统一基础包
     api library.v4
     api library.v7
     api library.multidex
-    api library.recyclerview
-    //api(name: 'rocket-v0.0.2', ext: 'aar')
-    /* ******* 工程依赖 ******** */
-    api project(':rocket')
-    /* ******* 第三方包 ******** */
+    // 第三方包
 }
