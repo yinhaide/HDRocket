@@ -69,7 +69,14 @@
 
 ## 如何快速集成
 
-**1、导入aar依赖包**
+### 导入方式
+
+**1、导入github依赖**
+```
+api 'com.github.yinhaide:Rocket-master:0.0.2'
+```
+
+**2、导入本地aar依赖包**
 ```
 1、新建libs目录
 2、将aar文件放在libs目录
@@ -85,6 +92,7 @@ dependencies {
     api(name: library.rocket, ext: 'aar')
 }
 ```
+### 工程配置
 
 **2、继承RoApplication**
 ```java

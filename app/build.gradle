@@ -50,6 +50,7 @@ dependencies {
     api library.recyclerview
     //api(name: 'rocket-v0.0.2', ext: 'aar')
     /* ******* 工程依赖 ******** */
-    api project(':rocket')
+    //api project(':rocket')
     /* ******* 第三方包 ******** */
+    api 'com.github.yinhaide:Rocket-master:0.0.2'
 }
