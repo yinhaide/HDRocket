@@ -432,82 +432,91 @@ public class Rocket{
 * 方案一：把commit()方法替换成 commitAllowingStateLoss()，不采用。
 * 方案二：在Activity 回收时 onSaveInstanceState 中不缓存Fragment ,在OnCreate 中移除缓存相应Fragment数据，采用。
 ```java
-private static final String BUNDLE_SURPOTR_FRAGMENTS_KEY = "android:support:fragments";
-private static final String BUNDLE_FRAGMENTS_KEY = "android:fragments";
-
-@Override
-protected void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-        if (outState != null) {
-            //重建时清除系统缓存的fragment的状态
-        	outState.remove(BUNDLE_SURPOTR_FRAGMENTS_KEY);
-        	outState.remove(BUNDLE_FRAGMENTS_KEY);
-        }
-}
-
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-    if (savedInstanceState != null) {
-        //重建时清除系统缓存的fragment的状态
-        savedInstanceState.remove(BUNDLE_FRAGMENTS_KEY);
-        savedInstanceState.remove(BUNDLE_SURPOTR_FRAGMENTS_KEY);
+public abstract class RoActivity extends FragmentActivity {
+    
+    private static final String BUNDLE_SURPOTR_FRAGMENTS_KEY = "android:support:fragments";
+    private static final String BUNDLE_FRAGMENTS_KEY = "android:fragments";
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+            if (outState != null) {
+                //重建时清除系统缓存的fragment的状态
+                outState.remove(BUNDLE_SURPOTR_FRAGMENTS_KEY);
+                outState.remove(BUNDLE_FRAGMENTS_KEY);
+            }
     }
-    super.onCreate(savedInstanceState);
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            //重建时清除系统缓存的fragment的状态
+            savedInstanceState.remove(BUNDLE_FRAGMENTS_KEY);
+            savedInstanceState.remove(BUNDLE_SURPOTR_FRAGMENTS_KEY);
+        }
+        super.onCreate(savedInstanceState);
+    } 
 }
-
 ```
 
 ### 2、FragmentManager is already executing transactions
 > 这个问题是由于在执行Fragment事务提交的时候，commitNow以及commitNowAllowingStateLoss表示立刻执行事务提交，这个时候Activity 中的 FragmentManager 的第一次任务还没有执行完毕，其他的操作又导致它需要进行第二次任务，所以发生错误。
 ```java
-private void ensureExecReady(boolean allowStateLoss) {
-    if (mExecutingActions) {
-        // 这正是堆栈日志中抛出的异常信息
-        throw new IllegalStateException("FragmentManager is already executing transactions");
+public class Fragment {
+    private void ensureExecReady(boolean allowStateLoss) {
+        if (mExecutingActions) {
+            // 这正是堆栈日志中抛出的异常信息
+            throw new IllegalStateException("FragmentManager is already executing transactions");
+        }
     }
 }
 ```
 **解决方案**
 * 等待第一个任务执行完毕后再执行第二个任务
 ```java
-new Handler().post(() -> {
-    //事务的提交            
-});
+public class xxFragment extends RoFragment {
+    private void doInHandler(){
+        new Handler().post(() -> {
+        //事务的提交            
+        });
+    }
+}
 ```
 * 采用commit()在队列中提交事务
-```java
+```
 //commit能保证在消息队列中提交事务，保证上个事务处理完毕才会执行
 fragmentTransaction.commit()；
 ```
 ### 3、Fragment  xxx not attached to a context.
 > 当一个Fragment已经从Activity中remove掉的时候，执行getString()、getResources()等，就会抛出这个异常。这种情况经常出现在异步回调的场景，比如一个网络请求比较耗时，在返回之前fragment已经销毁，当尝试读取资源就会出现。
 ```java
-//异步获取数据，并提示
-new Thread(() -> {
-    try {
-        Thread.sleep(5000);
-        toast(getString(R.string.app_name));
-    } catch (InterruptedException e) {
-        e.printStackTrace();
+public class xxFragment extends RoFragment {
+    public void test() {
+        //异步获取数据，并提示
+        new Thread(() -> {
+            try {
+                Thread.sleep(5000);
+                toast(getString(R.string.app_name));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        //返回上个页面并且销毁
+        back();
     }
-}).start();
-//返回上个页面并且销毁
-back();
+}
 ```
 **解决方案**
 * 方案一：直接使用Activity的getString()与getResources()获取资源。
 * 方案二：利用Fragment的isAdd()判断是否被移除在获取资源。
 ```java
-/**
- * 防止在Fragment销毁的时候调用资源导致崩溃
- *
- * @return Resources
- */
-public Resources getRoResources() {
-    if(isAdded()){
-        return requireContext().getResources();
-    }else{
-        return activity.getResources();
+public abstract class RoFragment extends Fragment {
+    public Resources getRoResources() {
+        if(isAdded()){
+            return requireContext().getResources();
+        }else{
+            return activity.getResources();
+        }
     }
 }
 ```
@@ -516,42 +525,50 @@ public Resources getRoResources() {
 > 这会导致一个逻辑问题，比如你做页面切换的时候，当两次切换的时差小于单个事务提交，就会导致一个Activity中存在多个相同tag的Fragment，这不是我们想要看到的。
 ```java
 //当快速执行两次页面跳转，理论上应该只会添加一个，但实际上两个都会被添加
-toFrag(Frag_rocket_permission.class);
-toFrag(Frag_rocket_permission.class);
-/**
- * 页面跳转
- * @param targetClass 已经注册的Fragment
- */
-public void toFrag(Class targetClass) {
-    FragmentManager fm = activity.getSupportFragmentManager();
-    FragmentTransaction ft = fm.beginTransaction();
-    String targetTag = targetClass.getSimpleName();
-    RoFragment targetFragment = (RoFragment) fm.findFragmentByTag(targetTag);//找出目标Fragment
-    if (targetFragment == null) {//目标不存在才会添加,保证单一性
-        targetFragment = (RoFragment) targetClass.newInstance();
-        ft.add(containid, targetFragment, targetTag);//添加
+public abstract class RoFragment extends Fragment {
+    
+    private void testTofrg(){//测试跳转
+        toFrag(Frag_rocket_permission.class);
+        toFrag(Frag_rocket_permission.class);
     }
-    ft.commit();
+
+    public void toFrag(Class targetClass) {
+        FragmentManager fm = activity.getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        String targetTag = targetClass.getSimpleName();
+        RoFragment targetFragment = (RoFragment) fm.findFragmentByTag(targetTag);//找出目标Fragment
+        if (targetFragment == null) {//目标不存在才会添加,保证单一性
+            targetFragment = (RoFragment) targetClass.newInstance();
+            ft.add(containid, targetFragment, targetTag);//添加
+        }
+        ft.commit();
+    }
 }
 ```
 **解决方案**
 * 上个页面跳转的时候加锁，直到页面跳转结束才释放锁，允许下个跳转，过快的跳转丢弃
 ```java
-if(!toFragEnable){//太快跳转锁住丢弃
-    return;
-}
-boolean result = toFrag();
-//跳转成功先锁住
-if(result){
-    toFragEnable = false;
+public abstract class RoFragment extends Fragment {
+    private void toFrag(){
+        if(!toFragEnable){//太快跳转锁住丢弃
+        return;
+        }
+        boolean result = toFragIner();
+        //跳转成功先锁住
+        if(result){
+            toFragEnable = false;
+        }
+    }
 }
 ```
 ```java
-@Override
-public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-    //Fragment show and hide 都会执行这个回调，用来处理页面跳转逻辑
-    //成功跳转才开锁，允许下次跳转
-    toFragEnable = true;
+public abstract class RoFragment extends Fragment { 
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        //Fragment show and hide 都会执行这个回调，用来处理页面跳转逻辑
+        //成功跳转才开锁，允许下次跳转
+        toFragEnable = true;
+    }  
 }
 ```
 ### 5、请不要在Fragment转场动画没结束之前允许用户操作
@@ -560,22 +577,24 @@ public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
 **解决方案**
 * 动画结束再执行事务(加锁)，或者临时将该Fragment设为无动画
 ```java
-@Override
-public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
- 	if(nextAnim > 0){//有转场动画的情况
-        Animation anim = AnimationUtils.loadAnimation(getActivity(), nextAnim);
-        anim.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation animation) {
-                isAnimationEnd = false;//动画开始
-            }
-            public void onAnimationRepeat(Animation animation) {}
-            public void onAnimationEnd(Animation animation) {
-                isAnimationEnd = true;//动画结束了
-            }
-        });
-        return anim;
-    }
-    return null;
+public abstract class RoFragment extends Fragment {
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if(nextAnim > 0){//有转场动画的情况
+            Animation anim = AnimationUtils.loadAnimation(getActivity(), nextAnim);
+            anim.setAnimationListener(new Animation.AnimationListener() {
+                public void onAnimationStart(Animation animation) {
+                    isAnimationEnd = false;//动画开始
+                }
+                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationEnd(Animation animation) {
+                    isAnimationEnd = true;//动画结束了
+                }
+            });
+            return anim;
+        }
+        return null;
+    }   
 }
 ```
 ### 6、getActivity() = null导致Crash
@@ -584,12 +603,15 @@ public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
 **解决方案**
 * 在onAttach(Activity activity)里将Activity全局保存下来
 ```java
-//缓存activity
-public RoActivity activity;
-@Override
-public void onAttach(Context context) {
-    super.onAttach(context);
-    this.activity = (RoActivity) context;
+public abstract class RoActivity extends FragmentActivity {
+    //缓存activity
+    public RoActivity activity;
+    
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.activity = (RoActivity) context;
+    }
 }
 ```
 
