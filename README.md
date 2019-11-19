@@ -70,7 +70,16 @@
 ## 如何快速集成
 
 ### 导入方式
-
+在工程级别的**build.gradle**添加
+```
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+在应用级别的**build.gradle**添加
 ```
 api 'com.github.yinhaide:Rocket-master:0.0.2'
 ```
