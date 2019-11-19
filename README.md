@@ -71,30 +71,13 @@
 
 ### 导入方式
 
-**1、导入github依赖**
 ```
 api 'com.github.yinhaide:Rocket-master:0.0.2'
 ```
 
-**2、导入本地aar依赖包**
-```
-1、新建libs目录
-2、将aar文件放在libs目录
-3、在应用级别的build.gradle加入
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-4、在应用级别的build.gradle加入
-dependencies {
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    api(name: library.rocket, ext: 'aar')
-}
-```
 ### 工程配置
 
-**2、继承RoApplication**
+**1、继承RoApplication**
 ```java
 public class SampleApplication extends RoApplication {
 
@@ -105,7 +88,7 @@ public class SampleApplication extends RoApplication {
 }
 ```
 
-**3、创建Frag_rocket并且继承RoFragment**
+**2、创建Frag_rocket并且继承RoFragment**
 ```java
 public class Frag_rocket extends RoFragment {
 
@@ -126,7 +109,7 @@ public class Frag_rocket extends RoFragment {
 }
 ```
 
-**4、创建RoxxActivity并且继承RoActivity**
+**3、创建RoxxActivity并且继承RoActivity**
 + RoxxActivity.class
 ```java
 public class RoxxActivity extends RoActivity {
