@@ -1,5 +1,6 @@
 package com.de.rocket.app.ue.frag;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,7 +42,31 @@ public class Frag_rocket extends RoFragment {
      * 初始化配置信息
      */
     private void initConfig() {
-
+        String content = "测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据测试写数据";
+        /*for(int i = 0 ; i < 50;i++){
+            final int index = i;
+            new Thread(() -> {
+                Rocket.writeOuterLog("一、"+index+" "+content);
+            }).start();
+        }
+        for(int i = 0 ; i < 50;i++){
+            final int index = i;
+            new Thread(() -> {
+                Rocket.writeOuterLog("二、"+index+" "+content);
+            }).start();
+        }
+        for(int i = 0 ; i < 50;i++){
+            final int index = i;
+            new Thread(() -> {
+                Rocket.writeOuterLog("三、"+index+" "+content);
+            }).start();
+        }
+        for(int i = 0 ; i < 50;i++){
+            final int index = i;
+            new Thread(() -> {
+                Rocket.writeOuterLog("四、"+index+" "+content);
+            }).start();
+        }*/
     }
 
     @Override

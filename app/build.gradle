@@ -74,9 +74,9 @@ dependencies {
     api library.recyclerview
     //以下的依赖方式三选一
     //api(name: 'rocket-v0.0.2', ext: 'aar')
-    //api project(':rocket')
+    api project(':rocket')
     // 架构包,单Activity多Fragment框架(https://github.com/yinhaide/Rocket-master)
-    api 'com.github.yinhaide:Rocket-master:0.0.2'
+    //api 'com.github.yinhaide:Rocket-master:0.0.2'
     /* ******* 第三方包 ******** */
     //内存泄漏检测工具，只需要依赖即可无需任何代码，只在debug版本生效
     debugApi 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'

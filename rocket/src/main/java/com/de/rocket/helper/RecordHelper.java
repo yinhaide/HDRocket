@@ -27,6 +27,7 @@ public class RecordHelper {
     private static final String INNER_NAME = "inner.log";//内部日志的名字
     private static final String CRASH_NAME = "crash.log";//崩溃日志的名字
     private static RecordBean recordBean = new RecordBean();//日志的配置
+    private static Object fileLock = new Object();//全局锁
 
     /**
      * 设置日志的配置
@@ -73,38 +74,40 @@ public class RecordHelper {
      */
     @SuppressLint("SimpleDateFormat")
     private static void writeLog(Context context,String content,String filename){
-        //SD卡是否已装入
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            //当天的日期
-            String dateFolder = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            //日志路径
-            File logFilesDir = context.getExternalFilesDir(ROCKET);
-            if(logFilesDir != null){
-                File folderFile = new File(logFilesDir.getAbsolutePath() + File.separator+dateFolder);
-                if(!folderFile.exists()){
-                    folderFile.mkdir();
-                }
-                File logFile = new File(folderFile.getAbsolutePath()+File.separator+filename);
-                if(!logFile.exists()){
-                    try {
-                        logFile.createNewFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        synchronized(fileLock){
+            //SD卡是否已装入
+            if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                //当天的日期
+                String dateFolder = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                //日志路径
+                File logFilesDir = context.getExternalFilesDir(ROCKET);
+                if(logFilesDir != null){
+                    File folderFile = new File(logFilesDir.getAbsolutePath() + File.separator+dateFolder);
+                    if(!folderFile.exists()){
+                        folderFile.mkdir();
                     }
-                }
-                if(logFile.exists()){//文件不存在就创建
-                    String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                    content = "\n" + dateStr + "--" + content;
-                    try {
-                        FileOutputStream output = new FileOutputStream(logFile, true);
-                        byte[] desBytes = content.getBytes(StandardCharsets.UTF_8);
-                        output.write(desBytes);
-                        output.flush();
-                        output.close();
-                        RoLogUtil.v("RecordHelper::writeLog-->成功写入日志:"+content +" filename:"+filename);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        RoLogUtil.e("RecordHelper::writeLog-->写入日志出错:"+e.toString());
+                    File logFile = new File(folderFile.getAbsolutePath()+File.separator+filename);
+                    if(!logFile.exists()){
+                        try {
+                            logFile.createNewFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(logFile.exists()){//文件不存在就创建
+                        String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
+                        content = "\n" + dateStr + "--" + content;
+                        try {
+                            FileOutputStream output = new FileOutputStream(logFile, true);
+                            byte[] desBytes = content.getBytes(StandardCharsets.UTF_8);
+                            output.write(desBytes);
+                            output.flush();
+                            output.close();
+                            RoLogUtil.v("RecordHelper::writeLog-->成功写入日志:"+content +" filename:"+filename);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            RoLogUtil.e("RecordHelper::writeLog-->写入日志出错:"+e.toString());
+                        }
                     }
                 }
             }
