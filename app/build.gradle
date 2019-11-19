@@ -15,6 +15,16 @@ android {
         multiDexEnabled info.multiDexEnabled
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    /*签名发布*/
+    signingConfigs {
+        release {
+            storeFile file("../rocket.jks")
+            storePassword "rocket"
+            keyAlias "rocket"
+            keyPassword "rocket"
+        }
+    }
+    //Rease
     buildTypes {
         release {
             minifyEnabled false
@@ -30,6 +40,20 @@ android {
     sourceSets {
         main {
             jniLibs.srcDir 'libs'
+        }
+    }
+    // 动态修改apk的名字
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+            def buildType = variant.buildType.name
+            def time = new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+            if (variant.buildType.name == 'debug') {
+                outputFileName = "rocket_app_v${versionName}_c${versionCode}_${buildType}.apk"
+            } else {
+                outputFileName = "rocket_app_v${versionName}_${time}_${buildType}.apk"
+            }
         }
     }
 }
