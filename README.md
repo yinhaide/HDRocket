@@ -81,7 +81,7 @@ allprojects {
 ```
 在应用级别的**build.gradle**添加
 ```
-api 'com.github.yinhaide:Rocket-master:0.0.2'
+api 'com.github.yinhaide:Rocket-master:0.0.3'
 ```
 
 ### 工程配置
