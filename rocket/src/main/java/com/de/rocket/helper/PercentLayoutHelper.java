@@ -55,7 +55,7 @@ public class PercentLayoutHelper {
             mWidthScreen = widthScreen;
         }
         if(heightScreen > 0){
-            mWidthScreen = mHeightScreen;
+            mHeightScreen = heightScreen;
         }
         //add by haide.yin on 2019-11-28 end
     }

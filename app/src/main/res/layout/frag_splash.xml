@@ -1,56 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.de.rocket.ue.layout.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource"
     android:background="@mipmap/splash">
 
-    <!--<com.de.rocket.ue.layout.PercentLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/v_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/rocket_cl_white"
-            app:layout_heightPercent="100%sw"
-            app:layout_marginTopPercent="5%sw"
-            app:layout_marginStartPercent="5%sw"
-            app:layout_marginEndPercent="2.5%sw"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/rocket_cl_white"
-            app:layout_heightPercent="100%sw"
-            app:layout_marginTopPercent="5%sw"
-            app:layout_marginLeftPercent="5%sw"
-            app:layout_marginRightPercent="2.5%sw"/>
-
-    </com.de.rocket.ue.layout.PercentLinearLayout>-->
-
-    <!--<com.de.rocket.ue.layout.PercentRelativeLayout
+    <!--下面演示有导航栏又可以滚动的页面布局，其中导航栏一直在底端-->
+    <!--如果没有底部导航栏，可以直接以ScrollView作为父布局-->
+    <ScrollView
+        android:layout_above="@+id/v_bottom"
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/view1"
+        <com.de.rocket.ue.layout.PercentLinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/rocket_cl_white"
-            app:layout_heightPercent="100%sw"/>
+            android:layout_height="wrap_content">
 
-        <View
-            android:layout_below="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/rocket_cl_white"
-            app:layout_marginTopPercent="20%sw"
-            app:layout_heightPercent="100%sw"/>
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/rocket_cl_rocket"
+                app:layout_heightPercent="100%sw"/>
 
-    </com.de.rocket.ue.layout.PercentRelativeLayout>-->
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/rocket_cl_rocket"
+                app:layout_heightPercent="100%sw"
+                app:layout_marginTopPercent="5%sw"/>
 
-</ScrollView>
+        </com.de.rocket.ue.layout.PercentLinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/v_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rocket_cl_white"
+        app:layout_heightPercent="18%sw"/>
+
+</com.de.rocket.ue.layout.PercentRelativeLayout>

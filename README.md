@@ -410,50 +410,52 @@ public class xxfragment{
 </declare-styleable>
 ```
 + 百分比布局实战建议
-> 如果布局高度没有超过屏幕高度的需求，直接使用以上娿百分比布局作为父类即可。如果允许超过屏幕高亮滚动的需求，请使用Scrollview+PercentxxxLayout组合，以屏幕宽度sw作为基准。
+> 如果布局高度没有超过屏幕高度的需求，直接使用以上的百分比布局作为父类即可。如果允许超过屏幕高亮滚动的需求(包括存在底部导航栏)，请使用Scrollview+PercentxxxLayout组合。
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.de.rocket.ue.layout.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <!--<com.de.rocket.ue.layout.PercentLinearLayout
+    <!--下面演示有导航栏又可以滚动的页面布局，其中导航栏一直在底端-->
+    <!--如果没有底部导航栏，可以直接以ScrollView作为父布局，实现内容超过屏幕滚动显示-->
+    <ScrollView
+        android:layout_above="@+id/v_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.de.rocket.ue.layout.PercentLinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_heightPercent="100%sw"/>
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_heightPercent="100%sw"
+                app:layout_marginTopPercent="5%sw"/>
+
+        </com.de.rocket.ue.layout.PercentLinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/v_bottom"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layout_heightPercent="18%sw"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_heightPercent="100%sw"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_heightPercent="100%sw"/>
-
-    </com.de.rocket.ue.layout.PercentLinearLayout>-->
-
-    <com.de.rocket.ue.layout.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_heightPercent="100%sw"/>
-
-        <View
-            android:layout_below="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_heightPercent="100%sw"/>
-
-    </com.de.rocket.ue.layout.PercentRelativeLayout>
-
-</ScrollView>
+</com.de.rocket.ue.layout.PercentRelativeLayout>
 ```
 
 **10、Rocket-工具类**
