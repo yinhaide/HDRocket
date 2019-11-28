@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.de.rocket.ue.layout.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:ignore="MissingDefaultResource"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@mipmap/splash">
 
-    <!--<View
-        android:id="@+id/v_up"
+    <!--<com.de.rocket.ue.layout.PercentLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rocket_cl_white"
-        app:layout_heightPercent="10%sh"
-        app:layout_marginTopPercent="5%sh"
-        app:layout_marginStartPercent="5%sw"
-        app:layout_marginEndPercent="2.5%sw"/>
+        android:orientation="vertical">
 
-    <View
-        android:layout_below="@+id/v_up"
+        <View
+            android:id="@+id/v_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rocket_cl_white"
+            app:layout_heightPercent="100%sw"
+            app:layout_marginTopPercent="5%sw"
+            app:layout_marginStartPercent="5%sw"
+            app:layout_marginEndPercent="2.5%sw"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rocket_cl_white"
+            app:layout_heightPercent="100%sw"
+            app:layout_marginTopPercent="5%sw"
+            app:layout_marginLeftPercent="5%sw"
+            app:layout_marginRightPercent="2.5%sw"/>
+
+    </com.de.rocket.ue.layout.PercentLinearLayout>-->
+
+    <!--<com.de.rocket.ue.layout.PercentRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/rocket_cl_white"
-        app:layout_heightPercent="10%sh"
-        app:layout_marginTopPercent="5%sh"
-        app:layout_marginLeftPercent="5%sw"
-        app:layout_marginRightPercent="2.5%sw"/>-->
+        android:layout_height="wrap_content">
 
-</com.de.rocket.ue.layout.PercentLinearLayout>
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rocket_cl_white"
+            app:layout_heightPercent="100%sw"/>
+
+        <View
+            android:layout_below="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rocket_cl_white"
+            app:layout_marginTopPercent="20%sw"
+            app:layout_heightPercent="100%sw"/>
+
+    </com.de.rocket.ue.layout.PercentRelativeLayout>-->
+
+</ScrollView>

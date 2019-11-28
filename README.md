@@ -384,8 +384,7 @@ public class xxfragment{
 ```
 
 **9、Layout-百分比布局**
-+ 支持的百分比布局
-> PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout
+> 支持PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout百分比布局，支持%s、%sh、%w、%sw的实时预览，支持Scrollview+PercentxxxLayout百分比滚动。
 + 支持的百分比参数
 ```xml
 <declare-styleable name="PercentLayout_Layout">
@@ -410,6 +409,53 @@ public class xxfragment{
     <attr format="string" name="layout_paddingRightPercent"/>
 </declare-styleable>
 ```
++ 百分比布局实战建议
+> 如果布局高度没有超过屏幕高度的需求，直接使用以上娿百分比布局作为父类即可。如果允许超过屏幕高亮滚动的需求，请使用Scrollview+PercentxxxLayout组合，以屏幕宽度sw作为基准。
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<com.de.rocket.ue.layout.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="100%sw"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="100%sw"/>
+
+    </com.de.rocket.ue.layout.PercentLinearLayout>-->
+
+    <com.de.rocket.ue.layout.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="100%sw"/>
+
+        <View
+            android:layout_below="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="100%sw"/>
+
+    </com.de.rocket.ue.layout.PercentRelativeLayout>
+
+</ScrollView>
+```
+
 **10、Rocket-工具类**
 > 说明:本类作用是暴露内部接口供外部使用，大量的内部方法将放在这里
 ```java
