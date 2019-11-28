@@ -663,8 +663,14 @@ public abstract class RoActivity extends FragmentActivity {
 }
 ```
 ## 这个项目会持续更新中... 
-> 都看到这里了，如果觉得写的可以或者对你有帮助的话，给个星星点下Star呗~
-+ 博客地址:https://blog.csdn.net/yinhaide/article/details/103083887
+> 都看到这里了，如果觉得写的可以或者对你有帮助的话，顺手点个星星点下Star~
+
+## 关于我
++ **Email:** [123302687@qq.com](123302687@qq.com)
++ **Github:** [https://github.com/yinhaide](https://github.com/yinhaide)
++ **简书:** [https://www.jianshu.com/u/33c3dd2ceaa3](https://www.jianshu.com/u/33c3dd2ceaa3)
++ **CSDN:** [https://blog.csdn.net/yinhaide](https://blog.csdn.net/yinhaide)
+
 
 ## LICENSE
 ````
