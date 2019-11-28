@@ -31,10 +31,10 @@ public class PercentLayoutHelper {
     private static final String REGEX_PERCENT = "^(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)%([s]?[wh]?)$";
     //父类布局
     private final ViewGroup mHost;
-    //屏幕宽度
-    private static int mWidthScreen;
-    //屏幕高度
-    private static int mHeightScreen;
+    //屏幕宽度(不给默认值的话用sh或者sw无法预览出来)
+    private static int mWidthScreen = 1080;
+    //屏幕高度(不给默认值的话用sh或者sw无法预览出来)
+    private static int mHeightScreen = 1920;
 
     public PercentLayoutHelper(ViewGroup host) {
         mHost = host;
@@ -48,8 +48,16 @@ public class PercentLayoutHelper {
         WindowManager wm = (WindowManager) mHost.getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
-        mWidthScreen = outMetrics.widthPixels;
-        mHeightScreen = outMetrics.heightPixels;
+        //add by haide.yin on 2019-11-28 start
+        int widthScreen = outMetrics.widthPixels;
+        int heightScreen = outMetrics.heightPixels;
+        if(widthScreen > 0){
+            mWidthScreen = widthScreen;
+        }
+        if(heightScreen > 0){
+            mWidthScreen = mHeightScreen;
+        }
+        //add by haide.yin on 2019-11-28 end
     }
 
     /**
@@ -59,7 +67,9 @@ public class PercentLayoutHelper {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
-        return outMetrics.heightPixels;
+        //add by haide.yin on 2019-11-28 start
+        return outMetrics.heightPixels > 0 ? outMetrics.heightPixels : mHeightScreen;
+        //add by haide.yin on 2019-11-28 end
     }
 
     /**

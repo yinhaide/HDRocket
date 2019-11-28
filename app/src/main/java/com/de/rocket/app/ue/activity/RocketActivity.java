@@ -1,21 +1,6 @@
 package com.de.rocket.app.ue.activity;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
-import android.telephony.CellInfo;
-import android.telephony.CellInfoCdma;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
-import android.telephony.CellInfoWcdma;
-import android.telephony.CellSignalStrengthCdma;
-import android.telephony.CellSignalStrengthGsm;
-import android.telephony.CellSignalStrengthLte;
-import android.telephony.CellSignalStrengthWcdma;
-import android.telephony.PhoneStateListener;
-import android.telephony.SignalStrength;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.de.rocket.Rocket;
 import com.de.rocket.app.R;
@@ -32,8 +17,6 @@ import com.de.rocket.bean.ActivityParamBean;
 import com.de.rocket.bean.RecordBean;
 import com.de.rocket.bean.StatusBarBean;
 import com.de.rocket.ue.activity.RoActivity;
-
-import java.util.List;
 
 public class RocketActivity extends RoActivity {
 
