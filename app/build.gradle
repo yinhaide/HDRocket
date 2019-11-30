@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+// 导入统一配置项
+def info = rootProject.ext.android
+def library = rootProject.ext.dependencies
+
+android {
+    compileSdkVersion info.compileSdkVersion
+    defaultConfig {
+        applicationId "com.yhd.wave.app"
+        minSdkVersion info.minSdkVersion
+        targetSdkVersion info.targetSdkVersion
+        versionCode info.versionCode
+        versionName info.versionName
+        multiDexEnabled info.multiDexEnabled
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    /*签名发布*/
+    signingConfigs {
+        release {
+            storeFile file("../mediaplayer.jks")
+            storePassword "mediaplayer"
+            keyAlias "mediaplayer"
+            keyPassword "mediaplayer"
+        }
+    }
+
+    /*混淆*/
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // 代码风格支持Java1.8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 指定jniLibs库路径为libs
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+        }
+    }
+
+    // 动态修改apk的名字
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+            def buildType = variant.buildType.name
+            def time = new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
+            if (variant.buildType.name == 'debug') {
+                outputFileName = "mediaplayer_${versionName}_c${versionCode}_${buildType}.apk"
+            } else {
+                outputFileName = "mediaplayer_${versionName}_${time}_${buildType}.apk"
+            }
+        }
+    }
+}
+
+dependencies {
+    /* ******* 统一基础包 ******** */
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api library.v4
+    api library.v7
+    api library.multidex
+    api library.recyclerview
+    /* ******* 工程依赖 ******** */
+    //api 'com.github.yinhaide:HDMediaPlayer:0.0.1'
+    api project(':mediaplayer')
+    // 架构包,单Activity多Fragment框架(https://github.com/yinhaide/Rocket-master),想要Android进阶的童鞋，非常值得推荐学习~
+    api 'com.github.yinhaide:Rocket-master:0.0.2'
+}

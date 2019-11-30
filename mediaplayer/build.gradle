@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.yinhaide'
+
+// 导入统一配置项
+def info = rootProject.ext.android
+def library = rootProject.ext.dependencies
+
+android {
+    compileSdkVersion info.compileSdkVersion
+    defaultConfig {
+        minSdkVersion info.minSdkVersion
+        targetSdkVersion info.targetSdkVersion
+        versionCode info.versionCode
+        versionName info.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    /* ******* 统一基础包 ******** */
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api library.v4
+    api library.v7
+    api library.multidex
+    api library.recyclerview
+}

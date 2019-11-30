@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.de.rocket.ue.layout.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
+
+    <FrameLayout
+        android:id="@+id/fl_fragment_contaner"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</com.de.rocket.ue.layout.PercentRelativeLayout>

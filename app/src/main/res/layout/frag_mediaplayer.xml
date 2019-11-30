@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/editLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/assetsMP3Button"
+            android:text="播放MP3"
+            android:layout_width="wrap_content"
+            android:onClick="onEditClick"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/assetsMP4Button"
+            android:text="本地视频"
+            android:layout_width="wrap_content"
+            android:onClick="onEditClick"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/urlButton"
+            android:text="播放网络视频"
+            android:layout_width="wrap_content"
+            android:onClick="onEditClick"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/editLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/stopButton"
+            android:text="暂停"
+            android:layout_width="wrap_content"
+            android:onClick="onEditClick"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/startButton"
+            android:text="开始"
+            android:layout_width="wrap_content"
+            android:onClick="onEditClick"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/resetButton"
+            android:text="重新开始"
+            android:layout_width="wrap_content"
+            android:onClick="onEditClick"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>
