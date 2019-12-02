@@ -83,7 +83,15 @@ MediaPlayerHelper.getInstance().getMediaPlayer().pause();
 MediaPlayerHelper.getInstance().getMediaPlayer().start();
 MediaPlayerHelper.getInstance().getMediaPlayer().stop();
 ```
-
+## 注意点
+**1、播放结束后到下次播放有黑屏现象**
+> 在部分配置比较低的电视或者手机设备中，视频播放完毕到下次播放之间可能存在1s左右的黑屏现象，原因是部分机器软解吗能力较弱，需要将数据解码放在内存当中导致黑屏。解决方案是开启手机的硬件加速能力，让硬件协助解码，消除黑屏现象。
+```
+<application
+    android:hardwareAccelerated="true"
+    ...
+</application>
+```
 
 ## 这个项目会持续更新中... 
 > 都看到这里了，如果觉得写的可以或者对你有帮助的话，顺手给个星星点下Star~
