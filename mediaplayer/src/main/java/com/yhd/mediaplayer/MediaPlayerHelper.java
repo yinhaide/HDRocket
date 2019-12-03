@@ -235,7 +235,10 @@ public class MediaPlayerHelper implements
         public void run() {
             refress_time_handler.removeCallbacks(refress_time_Thread);
             if(uiHolder.player!=null&&uiHolder.player.isPlaying()){
-                callBack(CallBackState.PROGRESS, 100*uiHolder.player.getCurrentPosition()/uiHolder.player.getDuration());
+                int duraction = uiHolder.player.getDuration();
+                if(duraction > 0){
+                    callBack(CallBackState.PROGRESS, 100*uiHolder.player.getCurrentPosition()/duraction);
+                }
             }
             refress_time_handler.postDelayed(refress_time_Thread,delaySecondTime);
         }
