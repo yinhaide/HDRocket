@@ -305,6 +305,10 @@ public class MediaPlayerHelper implements
     public void surfaceCreated(SurfaceHolder holder) {
         if(uiHolder.player != null && holder != null){
             uiHolder.player.setDisplay(holder);
+            //解决部分机型/电视播放的时候有声音没画面的情况
+            if(uiHolder.surfaceView != null){
+                uiHolder.surfaceView.post(() -> holder.setFixedSize(uiHolder.surfaceView.getWidth(),uiHolder.surfaceView.getHeight()));
+            }
         }
         callBack(CallBackState.SURFACEVIEW_CREATE,holder);
     }

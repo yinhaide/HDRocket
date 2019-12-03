@@ -14,7 +14,9 @@
         android:name="com.yhd.mediaplayer.app.SampleApplication"
         tools:ignore="GoogleAppIndexingWarning"
         android:screenOrientation="landscape">
-        <activity android:name="com.yhd.mediaplayer.app.activity.MainActivity">
+        <activity
+            android:name="com.yhd.mediaplayer.app.activity.MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
