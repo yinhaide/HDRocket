@@ -31,7 +31,7 @@ allprojects {
 ```
 在应用级别的**build.gradle**添加
 ```
-api 'com.github.yinhaide:HDMediaPlayer:0.0.1'
+api 'com.github.yinhaide:HDMediaPlayer:0.0.2'
 ```
 
 ### 如何使用
