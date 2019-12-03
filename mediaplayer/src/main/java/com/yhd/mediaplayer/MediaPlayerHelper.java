@@ -72,7 +72,7 @@ public class MediaPlayerHelper implements
      */
     public static synchronized MediaPlayerHelper getInstance(){
         if(instance == null){
-            instance=new MediaPlayerHelper();
+            instance= new MediaPlayerHelper();
         }
         return instance;
     }
@@ -330,7 +330,7 @@ public class MediaPlayerHelper implements
      */
     private void callBack(CallBackState state,Object... args){
         if(MediaPlayerHelperCallBack!=null) {
-            MediaPlayerHelperCallBack.onCallBack(state, instance,args);
+            MediaPlayerHelperCallBack.onCallBack(state, this,args);
         }
     }
 
