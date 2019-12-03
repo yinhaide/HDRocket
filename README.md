@@ -92,6 +92,18 @@ MediaPlayerHelper.getInstance().getMediaPlayer().stop();
     ...
 </application>
 ```
+**2、部分机型/电视存在黑屏有声音的现象**
+> 在部分机型中，会有播放没画面的，原因是因为SurfaceHolder可能在创建的时候尺寸不对，需要动态赋值。这个操作必须在主线程中进行。
+```
+@Override
+public void surfaceCreated(SurfaceHolder holder) {
+    ...
+    if(holder != null && uiHolder.surfaceView != null){
+        uiHolder.surfaceView.post(() -> holder.setFixedSize(uiHolder.surfaceView.getWidth(),uiHolder.surfaceView.getHeight()));
+    }
+    ...
+}
+```
 
 ## 这个项目会持续更新中... 
 > 都看到这里了，如果觉得写的可以或者对你有帮助的话，顺手给个星星点下Star~
