@@ -51,6 +51,7 @@ public class PercentLayoutHelper {
         //add by haide.yin on 2019-11-28 start
         int widthScreen = outMetrics.widthPixels;
         int heightScreen = outMetrics.heightPixels;
+        //isInEditMode用户判断是否在编辑模式下，如果在真机运行环境下isInEditMode返回false
         if(widthScreen > 0){
             mWidthScreen = widthScreen;
         }

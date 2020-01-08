@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.de.rocket.bean.RecordBean;
+import com.de.rocket.utils.ExecutorUtil;
 import com.de.rocket.utils.RoLogUtil;
 
 import java.io.File;
@@ -27,7 +28,6 @@ public class RecordHelper {
     private static final String INNER_NAME = "inner.log";//内部日志的名字
     private static final String CRASH_NAME = "crash.log";//崩溃日志的名字
     private static RecordBean recordBean = new RecordBean();//日志的配置
-    private static Object fileLock = new Object();//全局锁
 
     /**
      * 设置日志的配置
@@ -73,8 +73,9 @@ public class RecordHelper {
      * <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
      */
     @SuppressLint("SimpleDateFormat")
-    private static void writeLog(Context context,String content,String filename){
-        synchronized(fileLock){
+    private static void writeLog(Context context,final String origin,final String filename){
+        //IO操作放在线程池中操作，单核心线程执行，保证先进先执行
+        ExecutorUtil.get().executeSingle(() -> {
             //SD卡是否已装入
             if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 //当天的日期
@@ -94,9 +95,9 @@ public class RecordHelper {
                             e.printStackTrace();
                         }
                     }
-                    if(logFile.exists()){//文件不存在就创建
+                    if(logFile.exists()){//文件存
                         String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
-                        content = "\n" + dateStr + "--" + content;
+                        String content = "\n" + dateStr + "--" + origin;
                         try {
                             FileOutputStream output = new FileOutputStream(logFile, true);
                             byte[] desBytes = content.getBytes(StandardCharsets.UTF_8);
@@ -111,7 +112,7 @@ public class RecordHelper {
                     }
                 }
             }
-        }
+        });
     }
 
     /**
