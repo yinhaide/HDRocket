@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.de.rocket.ue.layout.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.de.rocket.ue.layout.PercentLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,9 +9,22 @@
     tools:ignore="MissingDefaultResource"
     android:background="@mipmap/splash">
 
+    <View
+        android:id="@+id/v_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rocket_cl_red"
+        app:layout_marginTopPercent="20%sw"
+        app:layout_marginStartPercent="10%sw"
+        app:layout_marginEndPercent="20%sw"
+        app:layout_heightPercent="100%sw"/>
+
     <!--下面演示有导航栏又可以滚动的页面布局，其中导航栏一直在底端-->
     <!--如果没有底部导航栏，可以直接以ScrollView作为父布局-->
-    <ScrollView
+    <!--<ScrollView
+        android:visibility="visible"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/v_test"
         android:layout_above="@+id/v_bottom"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
@@ -26,6 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/rocket_cl_rocket"
+                app:layout_marginLeftPercent="10%sw"
+                app:layout_marginRightPercent="20%sw"
                 app:layout_heightPercent="100%sw"/>
 
             <View
@@ -38,14 +54,15 @@
 
         </com.de.rocket.ue.layout.PercentLinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
     <View
         android:id="@+id/v_bottom"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rocket_cl_white"
+        android:background="@color/rocket_cl_red"
+        app:layout_marginTopPercent="10%sh"
         app:layout_heightPercent="18%sw"/>
 
-</com.de.rocket.ue.layout.PercentRelativeLayout>
+</com.de.rocket.ue.layout.PercentLinearLayout>

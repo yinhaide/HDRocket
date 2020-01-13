@@ -3,7 +3,6 @@ package com.de.rocket.helper;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
-import android.support.v4.view.MarginLayoutParamsCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -27,50 +26,35 @@ import java.util.regex.Pattern;
  */
 public class PercentLayoutHelper {
 
+    //默认的屏幕宽度(不给默认值的话用sh或者sw无法预览出来)
+    private static int SCREEN_WIDTH = 1080;
+    //默认的屏幕高度(不给默认值的话用sh或者sw无法预览出来)
+    private static int SCREEN_HEIGHT = 1920;
     //百分比正则表达式
     private static final String REGEX_PERCENT = "^(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)%([s]?[wh]?)$";
     //父类布局
     private final ViewGroup mHost;
     //屏幕宽度(不给默认值的话用sh或者sw无法预览出来)
-    private static int mWidthScreen = 1080;
+    private static int mWidthScreen = SCREEN_WIDTH;
     //屏幕高度(不给默认值的话用sh或者sw无法预览出来)
-    private static int mHeightScreen = 1920;
+    private static int mHeightScreen = SCREEN_HEIGHT;
 
     public PercentLayoutHelper(ViewGroup host) {
         mHost = host;
-        getScreenSize();
-    }
-
-    /**
-     * 获取屏幕尺寸
-     */
-    private void getScreenSize() {
-        WindowManager wm = (WindowManager) mHost.getContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        //add by haide.yin on 2019-11-28 start
-        int widthScreen = outMetrics.widthPixels;
-        int heightScreen = outMetrics.heightPixels;
-        //isInEditMode用户判断是否在编辑模式下，如果在真机运行环境下isInEditMode返回false
-        if(widthScreen > 0){
-            mWidthScreen = widthScreen;
+        if(!mHost.isInEditMode()){
+            WindowManager wm = (WindowManager) mHost.getContext().getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics outMetrics = new DisplayMetrics();
+            wm.getDefaultDisplay().getMetrics(outMetrics);
+            mWidthScreen = outMetrics.widthPixels;
+            mHeightScreen = outMetrics.heightPixels;
         }
-        if(heightScreen > 0){
-            mHeightScreen = heightScreen;
-        }
-        //add by haide.yin on 2019-11-28 end
     }
 
     /**
      * 获取屏幕高度
      */
-    public static int getScreenHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
-        //add by haide.yin on 2019-11-28 start
-        return outMetrics.heightPixels > 0 ? outMetrics.heightPixels : mHeightScreen;
-        //add by haide.yin on 2019-11-28 end
+    public int getScreenHeight() {
+        return mHeightScreen ;
     }
 
     /**
@@ -100,16 +84,8 @@ public class PercentLayoutHelper {
                     supportPadding(widthHint, heightHint, view, info);
                     supportMinOrMaxDimesion(widthHint, heightHint, view, info);
                     if (params instanceof ViewGroup.MarginLayoutParams) {
-                        info.fillMarginLayoutParams((ViewGroup.MarginLayoutParams) params, widthHint, heightHint);
-                        //add by haide -- start
-                        if(info.startMarginPercent != null){
-                            ((ViewGroup.MarginLayoutParams) params).setMarginStart(info.startMarginPercent.value);
-                            view.setLayoutParams(params);
-                        }
-                        if(info.endMarginPercent != null){
-                            ((ViewGroup.MarginLayoutParams) params).setMarginEnd(info.endMarginPercent.value);
-                            view.setLayoutParams(params);
-                        }
+                        //add by haide 新增view往下传 -- start
+                        info.fillMarginLayoutParams(view,(ViewGroup.MarginLayoutParams) params, widthHint, heightHint);
                         //add by haide -- end
                     } else {
                         info.fillLayoutParams(params, widthHint, heightHint);
@@ -541,20 +517,8 @@ public class PercentLayoutHelper {
             float percent = -1;
             //宽高模式
             BASEMODE basemode;
-            //add by haide -- start
-            //百分比对应的具体值
-            public int value;
-            //add by haide -- end
 
             PercentVal() {}
-
-            public int getValue() {
-                return value;
-            }
-
-            public void setValue(int value) {
-                this.value = value;
-            }
         }
 
         //宽高
@@ -606,15 +570,15 @@ public class PercentLayoutHelper {
         /**
          * 处理间距参数
          */
-        void fillMarginLayoutParams(ViewGroup.MarginLayoutParams params, int widthHint, int heightHint) {
+        void fillMarginLayoutParams(View childView,ViewGroup.MarginLayoutParams params, int widthHint, int heightHint) {
             fillLayoutParams(params, widthHint, heightHint);
             //缓存原始间距参数，在测量阶段之后就可以恢复
             mPreservedParams.leftMargin = params.leftMargin;
             mPreservedParams.topMargin = params.topMargin;
             mPreservedParams.rightMargin = params.rightMargin;
             mPreservedParams.bottomMargin = params.bottomMargin;
-            MarginLayoutParamsCompat.setMarginStart(mPreservedParams, MarginLayoutParamsCompat.getMarginStart(params));
-            MarginLayoutParamsCompat.setMarginEnd(mPreservedParams, MarginLayoutParamsCompat.getMarginEnd(params));
+            //MarginLayoutParamsCompat.setMarginStart(mPreservedParams, MarginLayoutParamsCompat.getMarginStart(params));
+            //MarginLayoutParamsCompat.setMarginEnd(mPreservedParams, MarginLayoutParamsCompat.getMarginEnd(params));
             if (leftMarginPercent != null) {
                 int base = getBaseByModeAndVal(widthHint, heightHint, leftMarginPercent.basemode);
                 params.leftMargin = (int) (base * leftMarginPercent.percent);
@@ -633,16 +597,18 @@ public class PercentLayoutHelper {
             }
             if (startMarginPercent != null) {
                 int base = getBaseByModeAndVal(widthHint, heightHint, startMarginPercent.basemode);
-                MarginLayoutParamsCompat.setMarginStart(params, (int) (base * startMarginPercent.percent));
-                //距离Start部分特殊处理  add by haide -- start
-                startMarginPercent.setValue((int) (base * startMarginPercent.percent));
+                //MarginLayoutParamsCompat.setMarginStart(params, (int) (base * startMarginPercent.percent));
+                //距离Start部分特殊处理，childView要从上个方法传 add by haide -- start
+                params.setMarginStart( (int) (base * startMarginPercent.percent));
+                childView.setLayoutParams(params);
                 //add by haide -- end
             }
             if (endMarginPercent != null) {
                 int base = getBaseByModeAndVal(widthHint, heightHint, endMarginPercent.basemode);
-                MarginLayoutParamsCompat.setMarginEnd(params, (int) (base * endMarginPercent.percent));
-                //距离End部分特殊处理 add by haide -- start
-                endMarginPercent.setValue((int) (base * endMarginPercent.percent));
+                //MarginLayoutParamsCompat.setMarginEnd(params, (int) (base * endMarginPercent.percent));
+                //距离End部分特殊处理，childView要从上个方法传 add by haide -- start
+                params.setMarginEnd( (int) (base * endMarginPercent.percent));
+                childView.setLayoutParams(params);
                 //add by haide -- end
             }
         }
@@ -656,8 +622,8 @@ public class PercentLayoutHelper {
             params.topMargin = mPreservedParams.topMargin;
             params.rightMargin = mPreservedParams.rightMargin;
             params.bottomMargin = mPreservedParams.bottomMargin;
-            MarginLayoutParamsCompat.setMarginStart(params, MarginLayoutParamsCompat.getMarginStart(mPreservedParams));
-            MarginLayoutParamsCompat.setMarginEnd(params, MarginLayoutParamsCompat.getMarginEnd(mPreservedParams));
+            //MarginLayoutParamsCompat.setMarginStart(params, MarginLayoutParamsCompat.getMarginStart(mPreservedParams));
+            //MarginLayoutParamsCompat.setMarginEnd(params, MarginLayoutParamsCompat.getMarginEnd(mPreservedParams));
         }
 
         /**

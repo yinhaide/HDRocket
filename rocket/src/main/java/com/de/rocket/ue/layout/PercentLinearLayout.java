@@ -51,7 +51,7 @@ public class PercentLinearLayout extends LinearLayout {
                 Activity act = (Activity) context;
                 baseHeight = act.findViewById(android.R.id.content).getMeasuredHeight();
             } else {
-                baseHeight = PercentLayoutHelper.getScreenHeight(getContext());
+                baseHeight = mHelper.getScreenHeight();
             }
             tmpHeightMeasureSpec = MeasureSpec.makeMeasureSpec(baseHeight, heightMode);
         }
