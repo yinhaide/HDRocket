@@ -41,7 +41,7 @@ public class PercentLayoutHelper {
 
     public PercentLayoutHelper(ViewGroup host) {
         mHost = host;
-        if(!mHost.isInEditMode()){
+        if(!mHost.isInEditMode()){//如果不是预览模式就读取真实的屏幕尺寸
             WindowManager wm = (WindowManager) mHost.getContext().getSystemService(Context.WINDOW_SERVICE);
             DisplayMetrics outMetrics = new DisplayMetrics();
             wm.getDefaultDisplay().getMetrics(outMetrics);
@@ -54,7 +54,7 @@ public class PercentLayoutHelper {
      * 获取屏幕高度
      */
     public int getScreenHeight() {
-        return mHeightScreen ;
+        return mHeightScreen;
     }
 
     /**

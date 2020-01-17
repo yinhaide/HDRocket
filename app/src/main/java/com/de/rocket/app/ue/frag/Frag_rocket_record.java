@@ -1,6 +1,5 @@
 package com.de.rocket.app.ue.frag;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;

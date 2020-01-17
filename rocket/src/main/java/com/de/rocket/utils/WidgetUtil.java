@@ -1,6 +1,7 @@
 package com.de.rocket.utils;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -27,15 +28,20 @@ public class WidgetUtil {
     public static void showGloaBall(ActivityResult activityResult) {
         Activity topActivity = Rocket.getTopActivity();
         //清除上个页面
-        hideGloBall();
+        hideGloBall(topActivity);
         if (activityResult != null && topActivity != null) {
             View view = activityResult.getView(topActivity);
             if (view != null) {
-                ViewGroup contentView = topActivity.findViewById(android.R.id.content);
+                //getDecorView获取DecorView是顶级View，它是一个FrameLayout布局，内部有titlebar和contentParent两个子元素。
+                //titlebar：顶级标题栏，如果Activity设置了FEATURE_NO_ACTIONBAR，这个view就会消失，那么DecorView就只有mContentParent一个子View
+                //contentParent：id是content，可以通过topActivity.findViewById(android.R.id.content)获取这个eView，们设置的Activity的setContentView(R.layout.main)的main.xml布局则是contentParent里面的一个子元素
+                //如果我们添加的View想要忽略titlebar的话就需要用decorView来添加，不忽略的话可用contentParent添加
+                ViewGroup decorView = (ViewGroup) topActivity.getWindow().getDecorView();
+                //ViewGroup contentView = topActivity.findViewById(android.R.id.content);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 view.setLayoutParams(params);
                 view.setId(GLOBAL_WIDGET_ID);
-                contentView.addView(view);
+                decorView.addView(view);
                 view.setVisibility(View.VISIBLE);
             }
         }
@@ -44,46 +50,21 @@ public class WidgetUtil {
     /**
      * 隐藏全局弹窗
      */
-    public static void hideGloBall() {
-        Activity activity = Rocket.getTopActivity();
+    public static void hideGloBall(Activity activity) {
         if (activity != null) {
-            ViewGroup contentView = activity.findViewById(android.R.id.content);
+            //ViewGroup contentView = activity.findViewById(android.R.id.content);
             ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            View fakeStatusBarView = decorView.findViewById(GLOBAL_WIDGET_ID);
-            if (fakeStatusBarView != null) {
-                decorView.removeView(fakeStatusBarView);//这一句待验证是否可以去掉
-                contentView.removeView(fakeStatusBarView);
+            //如果我们addView是通过contentView添加的，则decorView和contentView都能找到这个View
+            //如果我们addView是通过decorView添加的，只有decorView菜能找到这个View
+            //所以删除的话只需要用decorView删除即可
+            //View contentGlobalView = contentView.findViewById(GLOBAL_WIDGET_ID);
+            View decorViewGlobalView = decorView.findViewById(GLOBAL_WIDGET_ID);
+            if (decorViewGlobalView != null) {
+                decorView.removeView(decorViewGlobalView);
+                //contentView.removeView(decorViewGlobalView);
             }
         }
     }
-
-    //通过反射得到前台活动的Activity
-    /*@SuppressLint("PrivateApi")
-    private static Activity getTopActivity() {
-        // 要做适配,反射在10.0全部被google禁止, 会返回为null.
-        Class activityThreadClass = null;
-        try {
-            activityThreadClass = Class.forName("android.app.ActivityThread");
-            Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
-            Field activitiesField = activityThreadClass.getDeclaredField("mActivities");
-            activitiesField.setAccessible(true);
-            Map activities = (Map) activitiesField.get(activityThread);
-            for (Object activityRecord : activities.values()) {
-                Class activityRecordClass = activityRecord.getClass();
-                Field pausedField = activityRecordClass.getDeclaredField("paused");
-                pausedField.setAccessible(true);
-                if (!pausedField.getBoolean(activityRecord)) {
-                    Field activityField = activityRecordClass.getDeclaredField("activity");
-                    activityField.setAccessible(true);
-                    return (Activity) activityField.get(activityRecord);
-                }
-            }
-        } catch (ClassNotFoundException | NoSuchFieldException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
 
     /**
      * 读取当前Activity的回调
