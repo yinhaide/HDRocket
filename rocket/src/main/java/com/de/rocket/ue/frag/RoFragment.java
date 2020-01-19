@@ -31,7 +31,7 @@ import com.de.rocket.listener.PermissionListener;
 import com.de.rocket.helper.ViewInjectHelper;
 import com.de.rocket.helper.PermissionHelper;
 import com.de.rocket.ue.activity.RoActivity;
-import com.de.rocket.utils.ToastUtil;
+import com.de.rocket.helper.ToastHelper;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -514,7 +514,7 @@ public abstract class RoFragment extends Fragment {
      * @param tip 吐司内容
      */
     public void toast(String tip) {
-        toast(tip, ToastUtil.DEFAULT_MILTIME);
+        toast(tip, ToastHelper.DEFAULT_MILTIME);
     }
 
     /**
@@ -532,9 +532,9 @@ public abstract class RoFragment extends Fragment {
             return;
         }
         if (activity.getActivityParamBean().isToastCustom()) {
-            ToastUtil.toastCustom(tip, duration);
+            ToastHelper.toastCustom(tip, duration);
         } else {
-            ToastUtil.toastSystem(activity, tip, duration, ToastUtil.DEFAULT_GRAVATY, ToastUtil.DEFAULT_XOFFSET, ToastUtil.DEFAULT_YOFFSET);
+            ToastHelper.toastSystem(activity, tip, duration, ToastHelper.DEFAULT_GRAVATY, ToastHelper.DEFAULT_XOFFSET, ToastHelper.DEFAULT_YOFFSET);
         }
     }
 

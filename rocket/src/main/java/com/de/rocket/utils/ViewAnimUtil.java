@@ -7,13 +7,11 @@ import android.view.animation.TranslateAnimation;
 
 /**
  * 控制View的可视化帮助类,用法
- * <p>
  * ViewAnimUtil.showFade(fatherView, 0f,1f,100);
  * ViewAnimUtil.showFromBottom(childView,200);
- * <p>
  * ViewAnimUtil.hideToBottom(childView, 200);
  * ViewAnimUtil.hideFade(fatherView, 1f,0f,100);
- * <p>
+ *
  * Created by haide.yin(haide.yin@tcl.com) on 2019/2/25 10:20.
  */
 public class ViewAnimUtil {
@@ -25,7 +23,7 @@ public class ViewAnimUtil {
      * @param duraction 动画持续时间
      */
     public static void showFromBottom(View view, int duraction) {
-        if (view != null && view.getVisibility() == View.GONE) {
+        if (view != null) {
             view.setEnabled(true);
             TranslateAnimation showAnim = new TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f,
@@ -45,7 +43,7 @@ public class ViewAnimUtil {
      * @param duraction 动画持续时间
      */
     public static void hideToBottom(View view, int duraction) {
-        if (view != null && view.getVisibility() == View.VISIBLE) {
+        if (view != null) {
             view.setEnabled(false);
             TranslateAnimation hideAnim = new TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f,
@@ -67,7 +65,7 @@ public class ViewAnimUtil {
      * @param duraction  动画持续时间
      */
     public static void showFade(View view, float startAlpha, float endAlpha, int duraction) {
-        if (view != null && view.getVisibility() == View.GONE) {
+        if (view != null) {
             view.setEnabled(true);
             Animation animation = new AlphaAnimation(startAlpha, endAlpha);
             animation.setDuration(duraction);
@@ -85,7 +83,7 @@ public class ViewAnimUtil {
      * @param duraction  动画持续时间
      */
     public static void hideFade(View view, float startAlpha, float endAlpha, int duraction) {
-        if (view != null && view.getVisibility() == View.VISIBLE) {
+        if (view != null) {
             view.setEnabled(false);
             Animation animation = new AlphaAnimation(startAlpha, endAlpha);
             animation.setDuration(duraction);

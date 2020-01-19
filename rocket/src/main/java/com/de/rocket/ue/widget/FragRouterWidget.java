@@ -24,6 +24,9 @@ import java.util.List;
 
 public class FragRouterWidget extends RelativeLayout {
 
+    //用户缓存的ViewID
+    public static final int ROUTER_WIDGET_ID = R.id.rocket_global_widget_view;
+
     private TextView tvTitle;// 标题
     private TextView tvContent;// 内容
     private TextView tvSwitch;// 切换视图栈

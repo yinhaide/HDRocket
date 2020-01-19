@@ -43,21 +43,7 @@ public class Frag_rocket extends RoFragment {
      * 初始化配置信息
      */
     private void initConfig() {
-        //测试线程池异步操作
-        ExecutorUtil.get().execute(() -> {
-            Log.v("yhd-","异步处理");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            ExecutorUtil.get().postMainLooper(() -> {
-                Log.v("yhd-","1秒之后更新UI");
-                //tvRight.setText("哈哈");
-            });
-        });
-        ExecutorUtil.get().sheduleDelay(3000, () -> Log.v("yhd-","延迟3秒之后"));
-        ExecutorUtil.get().sheduleCount(1000, 10000, () -> Log.v("yhd-","计数器执行"));
+
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
 import com.de.rocket.R;
+import com.de.rocket.Rocket;
 import com.de.rocket.bean.ActivityParamBean;
 import com.de.rocket.bean.StatusBarBean;
 import com.de.rocket.cons.RoKey;
@@ -153,7 +154,7 @@ public abstract class RoActivity extends FragmentActivity {
         }
         //显示悬浮球
         if (activityParamBean.isShowViewBall()) {
-            WidgetUtil.showGloaBall(FragRouterWidget::new);
+            WidgetUtil.showGloaBal(Rocket.getTopActivity(),new FragRouterWidget(Rocket.getTopActivity()),FragRouterWidget.ROUTER_WIDGET_ID,-1,null);
         }
         //设置日志信息以及崩溃的配置
         CrashHelper.getInstance().setEnableCrashWindow(activityParamBean.isEnableCrashWindow());

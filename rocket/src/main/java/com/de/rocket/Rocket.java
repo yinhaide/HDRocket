@@ -129,11 +129,9 @@ public class Rocket {
      * 全局显示悬浮球以及栈视图
      */
     public static void showGloaBall() {
-        WidgetUtil.showGloaBall(topActivity -> {
-            FragRouterWidget fragRouterWidget1 = new FragRouterWidget(topActivity);
-            fragRouterWidget1.showStackView();
-            return fragRouterWidget1;
-        });
+        FragRouterWidget fragRouterWidget1 = new FragRouterWidget(getTopActivity());
+        fragRouterWidget1.showStackView();
+        WidgetUtil.showGloaBal(getTopActivity(),fragRouterWidget1,FragRouterWidget.ROUTER_WIDGET_ID,-1,null);
     }
 
     /* ************************************************************* */
