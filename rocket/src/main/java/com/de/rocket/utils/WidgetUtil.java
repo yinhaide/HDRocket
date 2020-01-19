@@ -16,7 +16,11 @@ public class WidgetUtil {
     /**
      * 全局显示一个View
      *
-     * @param activity 回调接口
+     * @param activity 活动的activity
+     * @param view 需要显示的View
+     * @param widgetID ViewID
+     * @param fadeDuraction 消失的渐变时间
+     * @param viewCallback 重复View的处理策略回调
      */
     public static void showGloaBal(@NonNull Activity activity, View view, int widgetID, int fadeDuraction, ViewCallback viewCallback) {
         if (view != null) {//删除View期间不能添加View
@@ -53,6 +57,9 @@ public class WidgetUtil {
 
     /**
      * 隐藏全局弹窗
+     * @param activity 活动的activity
+     * @param widgetID ViewID
+     * @param fadeDuraction 消失的渐变时间
      */
     public static void hideGloBal(@NonNull Activity activity, int widgetID, int fadeDuraction) {
         //ViewGroup contentView = activity.findViewById(android.R.id.content);
@@ -91,6 +98,7 @@ public class WidgetUtil {
 
         /**
          * GlobalView回调,返回旧的View，用户决定他的操作
+         * @param view 重复的View
          * @return true:外部自行处理；false:内部处理
          */
         boolean onView(View view);

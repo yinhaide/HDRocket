@@ -13,6 +13,15 @@ import android.widget.LinearLayout;
 
 import com.de.rocket.R;
 
+/**
+ * fitsSystemWindows：
+ * 根据官方文档，如果某个View 的fitsSystemWindows 设为true，那么该View的padding属性将由系统设置，
+ * 用户在布局文件中设置的padding会被忽略。系统会为该View设置一个paddingTop，值为statusbar的高度。fitsSystemWindows默认为false。
+ * 只有将statusbar设为透明，或者界面设为全屏显示时，fitsSystemWindows才会起作用。不然statusbar的空间轮不到用户处理
+ *
+ * 状态栏的状态资料参考：
+ * https://www.jianshu.com/p/e6656707f56c
+ */
 public class StatusBarHelper {
 
     //自定义状态栏对应的id
@@ -31,7 +40,6 @@ public class StatusBarHelper {
      * @param color         状态栏颜色值
      * @param isImmersion   是否要沉浸风格，是的画将会隐藏状态栏然后创建自定义的状态栏
      */
-
     public static void setStatusBarColor(Activity activity, @ColorInt int color,boolean isImmersion) {
         if(isImmersion){
             setImmersionBarColor(activity,color);
@@ -53,6 +61,46 @@ public class StatusBarHelper {
             setPaddingStatusBar(activity,targetView,enable);
         }else{
             setMarginStatusBar(activity,targetView,enable);
+        }
+    }
+
+    /**
+     * 设置沉浸式风格的状态栏目(取消状态栏的的占位符)
+     *
+     * @param activity fragment 对应的 activity
+     * @param color    颜色
+     */
+    private static void setImmersionBarColor(Activity activity, @ColorInt int color) {
+        //首先取消状态栏
+        showStatusbarForWindow(activity,false);
+        //4.4
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4
+            //加入新的状态栏（不加入队列的话会出现页面偏移的Bug）
+            new Handler().post(() -> addStatusBarView(activity, color));
+        }
+    }
+
+    /**
+     * 设置透明,隐藏状态栏
+     *
+     * @param activity 需要设置的 activity
+     */
+    private static void showStatusbarForWindow(Activity activity,boolean show) {
+        if(show){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
+                activity.getWindow().setStatusBarColor(oldStatusBarColor);
+                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4
+                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
+        }else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
+                oldStatusBarColor = activity.getWindow().getStatusBarColor();
+                activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4
+                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
         }
     }
 
@@ -111,21 +159,6 @@ public class StatusBarHelper {
         }
     }
 
-    /**
-     * 设置沉浸式风格的状态栏目(取消状态栏的的占位符)
-     *
-     * @param activity fragment 对应的 activity
-     * @param color    颜色
-     */
-    private static void setImmersionBarColor(Activity activity, @ColorInt int color) {
-        //首先取消状态栏
-        showStatusbarForWindow(activity,false);
-        //4.4
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4
-            //加入新的状态栏（不加入队列的话会出现页面偏移的Bug）
-            new Handler().post(() -> addStatusBarView(activity, color));
-        }
-    }
 
     /**
      * 设置状态栏颜色
@@ -190,30 +223,6 @@ public class StatusBarHelper {
             if (childView instanceof ViewGroup) {
                 childView.setFitsSystemWindows(true);
                 ((ViewGroup) childView).setClipToPadding(true);
-            }
-        }
-    }
-
-    /**
-     * 设置透明,隐藏状态栏
-     *
-     * @param activity 需要设置的 activity
-     */
-    private static void showStatusbarForWindow(Activity activity,boolean show) {
-        if(show){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
-                activity.getWindow().setStatusBarColor(oldStatusBarColor);
-                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4
-                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            }
-        }else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
-                oldStatusBarColor = activity.getWindow().getStatusBarColor();
-                activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4
-                activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             }
         }
     }
