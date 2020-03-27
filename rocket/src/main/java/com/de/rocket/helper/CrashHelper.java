@@ -104,6 +104,20 @@ public class CrashHelper implements Thread.UncaughtExceptionHandler{
     }
 
     /**
+     * 判断是否有数据需要APP处理，如果没可处理的数据就没必要弹窗了
+     */
+    @Deprecated
+    private boolean handleException(Throwable ex){
+        if (ex == null) {
+            return false;
+        }
+        if(ex.getLocalizedMessage() == null) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 读取异常消息
      * @param ex 异常
      */

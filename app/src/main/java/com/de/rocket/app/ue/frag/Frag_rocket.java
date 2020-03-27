@@ -1,6 +1,5 @@
 package com.de.rocket.app.ue.frag;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,7 +8,6 @@ import com.de.rocket.app.R;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.ue.injector.BindView;
 import com.de.rocket.ue.injector.Event;
-import com.de.rocket.utils.ExecutorUtil;
 
 /**
  * 类作用描述
@@ -61,7 +59,7 @@ public class Frag_rocket extends RoFragment {
     @Event(value = R.id.tv_right, type = View.OnClickListener.class/*可选参数, 默认是View.OnClickListener.class*/)
     private void toRoxx(View view) {
         //toAct(RoxxActivity.class,"Frag_roxx_widget","我是显示跳转Activity之间传递的对象");
-        toAct("com.de.rocket.RoxxActivity","Frag_roxx","我是隐式跳转Activity之间传递的对象");
+        //toAct("com.de.rocket.RoxxActivity","Frag_roxx","我是隐式跳转Activity之间传递的对象");
         TextView textView = null;
         //textView.setText("haha");
     }
