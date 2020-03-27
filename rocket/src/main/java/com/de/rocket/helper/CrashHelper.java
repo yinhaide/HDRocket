@@ -15,6 +15,9 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 崩溃处理
+ * 简单来说UncaughtExceptionHandler就是用于在线程中当一些系统没有捕获的异常发生的时候来处理这些异常的。
+ * 你可以使用系统默认的处理方式，你也可以通过Thread.setDefaultUncaughtExceptionHandler()方法
+ * 设置你自己定义的异常处理。
  */
 public class CrashHelper implements Thread.UncaughtExceptionHandler{
 
@@ -45,7 +48,7 @@ public class CrashHelper implements Thread.UncaughtExceptionHandler{
     public void initCrash(Context context){
         this.context = context.getApplicationContext();
         this.mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.setDefaultUncaughtExceptionHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(this);//捕获所有线程抛出的异常
     }
 
     /**
@@ -58,25 +61,31 @@ public class CrashHelper implements Thread.UncaughtExceptionHandler{
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        if(e != null){
-            //App处理
-            String errTrace = getExceptionTrace(e);
-            //打印输出
-            RoLogUtil.e("CrashHelper::uncaughtException-->"+errTrace);
-            //记录日志信息
-            RecordHelper.writeCrashLog(context,errTrace);
-            //显示异常的窗体(必须在页面正常起来之后才行，不然的话会无限重启)
-            if(ActivityHelper.getTopActivity() != null){
-                if(enableCrashWindow){
-                    showCrashWindow(ActivityHelper.getTopActivity(),errTrace);
+        try{
+            // 当主线程或子线程抛出异常时都会调用，可能运行在非UI线程中。
+            //异常处理内部建议手动try{}catch(Throwable e){} ，以防handlerException内部再次抛出异常，导致循环调用
+            if(e != null){
+                //App处理
+                String errTrace = getExceptionTrace(e);
+                //打印输出
+                RoLogUtil.e("CrashHelper::uncaughtException-->"+errTrace);
+                //记录日志信息
+                RecordHelper.writeCrashLog(context,errTrace);
+                //显示异常的窗体(必须在页面正常起来之后才行，不然的话会无限重启)
+                if(ActivityHelper.getTopActivity() != null){
+                    if(enableCrashWindow){
+                        showCrashWindow(ActivityHelper.getTopActivity(),errTrace);
+                    }else{
+                        systemException(t,e);
+                    }
                 }else{
                     systemException(t,e);
                 }
             }else{
-                systemException(t,e);
+                systemException(t,null);
             }
-        }else{
-            systemException(t,null);
+        } catch (Exception e1){
+            e1.printStackTrace();
         }
     }
 
@@ -84,8 +93,13 @@ public class CrashHelper implements Thread.UncaughtExceptionHandler{
      * 交给系统内部处理异常
      */
     private void systemException(Thread t, Throwable e){
+        //如果系统提供了默认的异常处理器，则交给系统去结束程序，否则就自己结束自己
         if(mDefaultHandler != null){
             mDefaultHandler.uncaughtException(t, e);
+        }else{
+            //退出程序
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
         }
     }
 
