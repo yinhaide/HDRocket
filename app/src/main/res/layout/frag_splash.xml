@@ -17,7 +17,7 @@
         app:layout_marginTopPercent="20%sw"
         app:layout_marginStartPercent="10%sw"
         app:layout_marginEndPercent="20%sw"
-        app:layout_heightPercent="100%sw"/>
+        app:layout_heightPercent="60%sw"/>
 
     <!--下面演示有导航栏又可以滚动的页面布局，其中导航栏一直在底端-->
     <!--如果没有底部导航栏，可以直接以ScrollView作为父布局-->
