@@ -1,8 +1,12 @@
 package com.de.rocket.app.ue.frag;
 
+import android.os.Debug;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import com.de.rocket.app.R;
+import com.de.rocket.app.tools.MemoryUtil;
 import com.de.rocket.ue.frag.RoFragment;
 
 /**
@@ -19,7 +23,11 @@ public class Frag_splash extends RoFragment {
 
     @Override
     public void initViewFinish(View inflateView) {
-        toFrag(Frag_rocket.class, true, true, null);
+        new Handler().postDelayed(() -> {
+            //打印对比fragment跳转之前的时间以及内存情况
+            MemoryUtil.printMemoryMsg("fragment_begin");
+            toFrag(Frag_rocket.class, true, false, null);
+        },1000);
     }
 
     @Override

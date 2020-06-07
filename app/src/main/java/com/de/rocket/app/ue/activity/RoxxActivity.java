@@ -1,6 +1,7 @@
 package com.de.rocket.app.ue.activity;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.de.rocket.Rocket;
 import com.de.rocket.app.R;
@@ -12,7 +13,7 @@ import com.de.rocket.ue.activity.RoActivity;
 public class RoxxActivity extends RoActivity {
 
     private Class[] roFragments = {
-
+            //Frag_splash.class,
     };
 
     @Override

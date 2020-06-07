@@ -8,6 +8,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.de.rocket.app.R;
+import com.de.rocket.app.tools.MemoryUtil;
 import com.de.rocket.bean.RecordBean;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.ue.injector.BindView;
@@ -41,6 +42,7 @@ public class Frag_rocket_record extends RoFragment {
 
     @Override
     public void initViewFinish(View inflateView) {
+        MemoryUtil.printMemoryMsg("fragment_record_end");
         initView();
     }
 

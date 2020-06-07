@@ -1,10 +1,16 @@
 package com.de.rocket.app.ue.frag;
 
+import android.content.Intent;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.de.rocket.Rocket;
 import com.de.rocket.app.R;
+import com.de.rocket.app.tools.MemoryUtil;
+import com.de.rocket.app.ue.activity.EmptyActivity;
+import com.de.rocket.app.ue.activity.RoxxActivity;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.ue.injector.BindView;
 import com.de.rocket.ue.injector.Event;
@@ -25,6 +31,8 @@ public class Frag_rocket extends RoFragment {
 
     @Override
     public void initViewFinish(View inflateView) {
+        //打印对比fragment跳转之后的时间以及内存情况
+        MemoryUtil.printMemoryMsg("fragment_end");
         initView();
         initConfig();
     }
@@ -60,8 +68,11 @@ public class Frag_rocket extends RoFragment {
     private void toRoxx(View view) {
         //toAct(RoxxActivity.class,"Frag_roxx_widget","我是显示跳转Activity之间传递的对象");
         //toAct("com.de.rocket.RoxxActivity","Frag_roxx","我是隐式跳转Activity之间传递的对象");
-        TextView textView = null;
+        //TextView textView = null;
         //textView.setText("haha");
+        //打印对比activity跳转之前的时间以及内存情况
+        MemoryUtil.printMemoryMsg("activity_begin");
+        startActivity(new Intent(activity,EmptyActivity.class));
     }
 
     @Event(R.id.bt_animation)
@@ -86,7 +97,8 @@ public class Frag_rocket extends RoFragment {
     }
 
     @Event(R.id.bt_record)
-    private void record(TextView view) {//状态栏
+    private void record(TextView view) {//日志
+        MemoryUtil.printMemoryMsg("fragment_record_begin");
         toFrag(Frag_rocket_record.class);
     }
 

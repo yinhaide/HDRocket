@@ -27,18 +27,20 @@
         <activity android:name=".ue.activity.RocketActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ue.activity.RoxxActivity">
+        <activity android:name=".ue.activity.RoxxActivity">
             <intent-filter>
+
                 <!-- 隐式跳转的靶子 -->
                 <action android:name="com.de.rocket.RoxxActivity" />
                 <!-- 隐式跳转必须要重写这个category -->
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ue.activity.EmptyActivity"></activity>
     </application>
 
 </manifest>
