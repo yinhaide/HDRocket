@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+
+    <!-- 百分比布局属性 -->
+    <declare-styleable name="PercentLayout">
+        <!-- 宽度 -->
+        <attr name="layout_widthPercent" format="string"/>
+        <!-- 高度 -->
+        <attr name="layout_heightPercent" format="string"/>
+        <!-- 外间距 -->
+        <attr name="layout_marginPercent" format="string"/>
+        <!-- 左外间距 -->
+        <attr name="layout_marginLeftPercent" format="string"/>
+        <!-- 上外间距 -->
+        <attr name="layout_marginTopPercent" format="string"/>
+        <!-- 右外间距 -->
+        <attr name="layout_marginRightPercent" format="string"/>
+        <!-- 下外间距 -->
+        <attr name="layout_marginBottomPercent" format="string"/>
+        <!-- 左外间距(中东国家适用) -->
+        <attr name="layout_marginStartPercent" format="string"/>
+        <!-- 右外间距(中东国家适用) -->
+        <attr name="layout_marginEndPercent" format="string"/>
+        <!-- 文字高度 -->
+        <attr name="layout_textSizePercent" format="string"/>
+        <!-- 最大宽度 -->
+        <attr name="layout_maxWidthPercent" format="string"/>
+        <!-- 最大高度 -->
+        <attr name="layout_maxHeightPercent" format="string"/>
+        <!-- 最小宽度 -->
+        <attr name="layout_minWidthPercent" format="string"/>
+        <!-- 最小高度 -->
+        <attr name="layout_minHeightPercent" format="string"/>
+        <!-- 内间距 -->
+        <attr name="layout_paddingPercent" format="string"/>
+        <!-- 内上间距 -->
+        <attr name="layout_paddingTopPercent" format="string"/>
+        <!-- 内下间距 -->
+        <attr name="layout_paddingBottomPercent" format="string"/>
+        <!-- 内左间距 -->
+        <attr name="layout_paddingLeftPercent" format="string"/>
+        <!-- 内右间距 -->
+        <attr name="layout_paddingRightPercent" format="string"/>
+        <!-- 内左间距(中东国家适用) -->
+        <attr name="layout_paddingStartPercent" format="string"/>
+        <!-- 内右间距(中东国家适用) -->
+        <attr name="layout_paddingEndPercent" format="string"/>
+    </declare-styleable>
+
+</resources>

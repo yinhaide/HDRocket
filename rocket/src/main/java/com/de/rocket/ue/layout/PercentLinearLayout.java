@@ -85,16 +85,6 @@ public class PercentLinearLayout extends LinearLayout {
             mPercentLayoutInfo = PercentLayoutHelper.getPercentLayoutInfo(c, attrs);
         }
 
-        @Override
-        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
-            return mPercentLayoutInfo;
-        }
-
-        @Override
-        protected void setBaseAttributes(TypedArray typedArray, int widthAttr, int heightAttr) {
-            PercentLayoutHelper.fetchWidthAndHeight(this, typedArray, widthAttr, heightAttr);
-        }
-
         public LayoutParams(int width, int height)
         {
             super(width, height);
@@ -108,6 +98,16 @@ public class PercentLinearLayout extends LinearLayout {
         public LayoutParams(MarginLayoutParams source)
         {
             super(source);
+        }
+
+        @Override
+        public PercentLayoutHelper.PercentLayoutInfo getPercentLayoutInfo() {
+            return mPercentLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray typedArray, int widthAttr, int heightAttr) {
+            PercentLayoutHelper.fetchWidthAndHeight(this, typedArray, widthAttr, heightAttr);
         }
     }
 }

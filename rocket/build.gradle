@@ -30,7 +30,7 @@ android {
     }
 
     // 统一限定资源的前缀,防止资源同名导致不可控异常
-    resourcePrefix "${project.name}_"
+    //resourcePrefix "${project.name}_"
 
     // 动态修改aar的名字
     android.libraryVariants.all { variant ->

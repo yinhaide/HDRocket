@@ -2,7 +2,6 @@ package com.de.rocket.helper;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -100,6 +99,7 @@ public class PercentLayoutHelper {
      */
     private void supportPadding(int widthHint, int heightHint, View view, PercentLayoutInfo info) {
         int left = view.getPaddingLeft(), right = view.getPaddingRight(), top = view.getPaddingTop(), bottom = view.getPaddingBottom();
+        int start = view.getPaddingStart(), end = view.getPaddingEnd();
         PercentLayoutInfo.PercentVal percentVal = info.paddingLeftPercent;
         if (percentVal != null) {
             int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
@@ -120,7 +120,30 @@ public class PercentLayoutHelper {
             int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
             bottom = (int) (base * percentVal.percent);
         }
+        // add by haide.yin start -- 20200606
+        percentVal = info.paddingStartPercent;
+        if (percentVal != null) {
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            start = (int) (base * percentVal.percent);
+        }
+        percentVal = info.paddingEndPercent;
+        if (percentVal != null) {
+            int base = getBaseByModeAndVal(widthHint, heightHint, percentVal.basemode);
+            end = (int) (base * percentVal.percent);
+        }
         view.setPadding(left, top, right, bottom);
+        if(start > 0 || end > 0){
+            if(start == 0){
+                // TODO: 2020/6/7 这里还需要根据判断是否是中东国家，暂时不作处理，如果是中东国家则：start = right
+                start = left;
+            }
+            if(end == 0){
+                // TODO: 2020/6/7 这里还需要根据判断是否是中东国家，暂时不作处理，如果是中东国家则：end = left
+                end = right;
+            }
+            view.setPaddingRelative(start, top, end, bottom);
+        }
+        // add by haide.yin end -- 20200606
     }
 
     /**
@@ -190,7 +213,7 @@ public class PercentLayoutHelper {
      */
     public static PercentLayoutInfo getPercentLayoutInfo(Context context, AttributeSet attrs) {
         PercentLayoutInfo info = null;
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PercentLayout_Layout);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PercentLayout);
         info = setWidthAndHeightVal(array, info);
         info = setMarginRelatedVal(array, info);
         info = setTextSizeSupportVal(array, info);
@@ -204,12 +227,12 @@ public class PercentLayoutHelper {
      * 设置宽高相关属性
      */
     private static PercentLayoutInfo setWidthAndHeightVal(TypedArray array, PercentLayoutInfo info) {
-        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_widthPercent, true);
+        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_widthPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.widthPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_heightPercent, false);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_heightPercent, false);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.heightPercent = percentVal;
@@ -222,7 +245,7 @@ public class PercentLayoutHelper {
      */
     private static PercentLayoutInfo setTextSizeSupportVal(TypedArray array, PercentLayoutInfo info) {
         //textSizePercent 默认以高度作为基准
-        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_textSizePercent, false);
+        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_textSizePercent, false);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.textSizePercent = percentVal;
@@ -235,25 +258,25 @@ public class PercentLayoutHelper {
      */
     private static PercentLayoutInfo setMinMaxWidthHeightRelatedVal(TypedArray array, PercentLayoutInfo info) {
         //maxWidth
-        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_maxWidthPercent, true);
+        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_maxWidthPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.maxWidthPercent = percentVal;
         }
         //maxHeight
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_maxHeightPercent, false);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_maxHeightPercent, false);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.maxHeightPercent = percentVal;
         }
         //minWidth
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_minWidthPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_minWidthPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.minWidthPercent = percentVal;
         }
         //minHeight
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_minHeightPercent, false);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_minHeightPercent, false);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.minHeightPercent = percentVal;
@@ -266,7 +289,7 @@ public class PercentLayoutHelper {
      */
     private static PercentLayoutInfo setMarginRelatedVal(TypedArray array, PercentLayoutInfo info) {
         //默认margin参考宽度
-        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginPercent, true);
+        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.leftMarginPercent = percentVal;
@@ -274,32 +297,32 @@ public class PercentLayoutHelper {
             info.rightMarginPercent = percentVal;
             info.bottomMarginPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginLeftPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginLeftPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.leftMarginPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginTopPercent, false);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginTopPercent, false);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.topMarginPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginRightPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginRightPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.rightMarginPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginBottomPercent, false);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginBottomPercent, false);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.bottomMarginPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginStartPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginStartPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.startMarginPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_marginEndPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_marginEndPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.endMarginPercent = percentVal;
@@ -315,33 +338,45 @@ public class PercentLayoutHelper {
      */
     private static PercentLayoutInfo setPaddingRelatedVal(TypedArray array, PercentLayoutInfo info) {
         //默认padding以宽度为标准
-        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_paddingPercent, true);
+        PercentLayoutInfo.PercentVal percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.paddingLeftPercent = percentVal;
             info.paddingRightPercent = percentVal;
             info.paddingBottomPercent = percentVal;
             info.paddingTopPercent = percentVal;
+            info.paddingStartPercent = percentVal;
+            info.paddingEndPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_paddingLeftPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingLeftPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.paddingLeftPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_paddingRightPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingRightPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.paddingRightPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_paddingTopPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingTopPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.paddingTopPercent = percentVal;
         }
-        percentVal = getPercentVal(array, R.styleable.PercentLayout_Layout_layout_paddingBottomPercent, true);
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingBottomPercent, true);
         if (percentVal != null) {
             info = checkForInfoExists(info);
             info.paddingBottomPercent = percentVal;
+        }
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingStartPercent, true);
+        if (percentVal != null) {
+            info = checkForInfoExists(info);
+            info.paddingStartPercent = percentVal;
+        }
+        percentVal = getPercentVal(array, R.styleable.PercentLayout_layout_paddingEndPercent, true);
+        if (percentVal != null) {
+            info = checkForInfoExists(info);
+            info.paddingEndPercent = percentVal;
         }
         return info;
     }
@@ -351,7 +386,6 @@ public class PercentLayoutHelper {
         return getPercentVal(sizeStr, baseWidth);
     }
 
-    @NonNull
     private static PercentLayoutInfo checkForInfoExists(PercentLayoutInfo info) {
         info = info != null ? info : new PercentLayoutInfo();
         return info;
@@ -543,6 +577,8 @@ public class PercentLayoutHelper {
         PercentVal paddingRightPercent;
         PercentVal paddingTopPercent;
         PercentVal paddingBottomPercent;
+        PercentVal paddingStartPercent;
+        PercentVal paddingEndPercent;
         //缓存旧的间距参数
         final ViewGroup.MarginLayoutParams mPreservedParams;
 

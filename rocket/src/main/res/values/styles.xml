@@ -24,26 +24,4 @@
         <!--<item name="android:screenOrientation">portrait</item>--><!--强制竖屏,默认unspecified，由系统决定，不同手机可能不一致-->
     </style>
 
-    <declare-styleable name="PercentLayout_Layout" tools:ignore="ResourceName">
-        <attr format="string" name="layout_widthPercent"/>
-        <attr format="string" name="layout_heightPercent"/>
-        <attr format="string" name="layout_marginPercent"/>
-        <attr format="string" name="layout_marginLeftPercent"/>
-        <attr format="string" name="layout_marginTopPercent"/>
-        <attr format="string" name="layout_marginRightPercent"/>
-        <attr format="string" name="layout_marginBottomPercent"/>
-        <attr format="string" name="layout_marginStartPercent"/>
-        <attr format="string" name="layout_marginEndPercent"/>
-        <attr format="string" name="layout_textSizePercent"/>
-        <attr format="string" name="layout_maxWidthPercent"/>
-        <attr format="string" name="layout_maxHeightPercent"/>
-        <attr format="string" name="layout_minWidthPercent"/>
-        <attr format="string" name="layout_minHeightPercent"/>
-        <attr format="string" name="layout_paddingPercent"/>
-        <attr format="string" name="layout_paddingTopPercent"/>
-        <attr format="string" name="layout_paddingBottomPercent"/>
-        <attr format="string" name="layout_paddingLeftPercent"/>
-        <attr format="string" name="layout_paddingRightPercent"/>
-    </declare-styleable>
-
 </resources>

@@ -9,6 +9,13 @@
     tools:ignore="MissingDefaultResource"
     android:background="@mipmap/splash">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        app:layout_paddingLeftPercent="10%sw"
+        app:layout_paddingEndPercent="20%sw"/>
+
     <View
         android:id="@+id/v_test"
         android:layout_width="match_parent"
@@ -17,7 +24,7 @@
         app:layout_marginTopPercent="20%sw"
         app:layout_marginStartPercent="10%sw"
         app:layout_marginEndPercent="20%sw"
-        app:layout_heightPercent="60%sw"/>
+        app:layout_heightPercent="40%sw"/>
 
     <!--下面演示有导航栏又可以滚动的页面布局，其中导航栏一直在底端-->
     <!--如果没有底部导航栏，可以直接以ScrollView作为父布局-->
