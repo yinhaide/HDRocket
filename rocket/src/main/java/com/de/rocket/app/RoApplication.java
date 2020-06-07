@@ -1,42 +1,33 @@
 package com.de.rocket.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.multidex.MultiDexApplication;
 
-import com.de.rocket.helper.ActivityHelper;
-import com.de.rocket.helper.CrashHelper;
-import com.de.rocket.helper.LocaleHelper;
+import com.de.rocket.Rocket;
 
+/**
+ * 本类给出一个Application的Demo，当然开发者也可以不用这个，使用自己的，只需要调用必须的Rocket.init(application)即可；
+ * Created by haide.yin(haide.yin@tcl.com) on 2019/6/24 17:43.
+ */
 public class RoApplication extends MultiDexApplication {
-
-    //Application
-    public static Application APPLICATION;
 
     @Override
     protected void attachBaseContext(Context context) {
         //多国语言适配
-        super.attachBaseContext(LocaleHelper.attachBaseContext(context));
+        super.attachBaseContext(Rocket.attachBaseContext(context));
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         //多国语言适配
-        LocaleHelper.init(this);
+        Rocket.onConfigurationChanged(this);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //存储当前的Application
-        APPLICATION = this;
-        //多国语言适配
-        LocaleHelper.init(this);
-        //崩溃异常的处理
-        CrashHelper.getInstance().initCrash(this);
-        //重写生命周期
-        registerActivityLifecycleCallbacks(new ActivityHelper());
+        Rocket.init(this);
     }
 }

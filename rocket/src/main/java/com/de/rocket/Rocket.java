@@ -3,15 +3,18 @@ package com.de.rocket;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.de.rocket.app.RoApplication;
 import com.de.rocket.helper.ActivityHelper;
+import com.de.rocket.helper.CrashHelper;
 import com.de.rocket.helper.FragHelper;
 import com.de.rocket.helper.LocaleHelper;
 import com.de.rocket.helper.StatusBarHelper;
@@ -30,10 +33,48 @@ import java.util.Locale;
  */
 public class Rocket {
 
+    //全局的Application
+    private static Application application;
+
+    /**
+     * applicatipn的初始化，建议在onCreate中调用
+     *
+     * @param app 进程
+     */
+    public static void init(@NonNull Application app){
+        //存储当前的Application
+        application = app;
+        //多国语言适配
+        LocaleHelper.init(application);
+        //崩溃异常的处理
+        CrashHelper.getInstance().initCrash(application);
+        //重写生命周期
+        application.registerActivityLifecycleCallbacks(new ActivityHelper());
+    }
+
     /* ************************************************************* */
     /*                           国际化相关
     /* ************************************************************* */
 
+    /**
+     * 用于支持应用内的多语言支持一，重写Application的attachBaseContext
+     * 使用方式：super.attachBaseContext(Rocket.attachBaseContext(context));
+     *
+     * @param context 上下文
+     */
+    public static Context attachBaseContext(Context context) {
+        return LocaleHelper.attachBaseContext(context);
+    }
+
+    /**
+     * 用于支持应用内的多语言支持二，重写Application的onConfigurationChanged
+     * 使用方式：Rocket.onConfigurationChanged(application);
+     *
+     * @param app allication
+     */
+    public static void onConfigurationChanged(Application app) {
+        LocaleHelper.init(app);
+    }
     /**
      * 设置APP需要缓存的语言
      *
@@ -113,7 +154,7 @@ public class Rocket {
      * @return  Application
      */
     public static Application getApplication() {
-        return RoApplication.APPLICATION;
+        return application;
     }
 
     /**

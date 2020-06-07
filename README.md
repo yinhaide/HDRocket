@@ -87,13 +87,15 @@ api 'com.github.yinhaide:Rocket-master:0.0.3'
 
 ### 工程配置
 
-**1、继承RoApplication**
+**1、Application初始化**
 ```java
-public class SampleApplication extends RoApplication {
+public class SampleApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        //必须的初始化操作
+        Rocket.init(this);
     }
 }
 ```
