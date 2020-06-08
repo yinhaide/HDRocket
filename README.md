@@ -34,6 +34,13 @@
 
 + **提供百分比布局，支持PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout**
 
+## 此框架目前用于以下应用
+<img src="image/TCLConnect.png" width = "100px" height="100px"/>
+<img src="image/TPMS.png" width = "100px" height="100px"/>
+<img src="image/SteamLession.png" width = "100px" height="100px"/>
+<img src="image/SteamPen.png" width = "100px" height="100px"/>
+<img src="image/SteamBook.png" width = "100px" height="100px"/>
+
 ## 分享设计Rockt架构的思路
 **1、为什么要设计这个架构**
 > Activity是一个非常重量级的设计！Activity的创建并不能由开发者自己控制，它是通过多进程远程调用并最终通过放射的方式创建的。在此期间，AMS需要做大量的工作，以至于Activity的启动过程极其缓慢。同时，Activity切换的开销也非常重量级，很容易造成卡顿，用户体验不好。另外，在宽屏设备上，如果需要多屏互动时，Activity的局限性也就表现了出来。为此Android团队在Android 3.0的时候引入了Fragment。Fragment的出现解决了上面两个问题。根据词海的翻译可以译为:碎片、片段，可以很好解决Activity间的切换不流畅。因为是轻量切换，性能更好，更加灵活。
