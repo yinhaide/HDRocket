@@ -35,11 +35,7 @@
 + **提供百分比布局，支持PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout**
 
 ## 此框架目前用于以下应用
-<img src="image/TCLConnect.png" width = "100px" height="100px"/>
-<img src="image/TPMS.png" width = "100px" height="100px"/>
-<img src="image/SteamLession.png" width = "100px" height="100px"/>
-<img src="image/SteamPen.png" width = "100px" height="100px"/>
-<img src="image/SteamBook.png" width = "100px" height="100px"/>
+<img src="image/TCLConnect.png" width = "100px" height="100px"/>  <img src="image/TPMS.png" width = "100px" height="100px"/>  <img src="image/SteamLession.png" width = "100px" height="100px"/>  <img src="image/SteamPen.png" width = "100px" height="100px"/> <img src="image/SteamBook.png" width = "100px" height="100px"/>
 
 ## 分享设计Rockt架构的思路
 **1、为什么要设计这个架构**
