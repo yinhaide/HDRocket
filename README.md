@@ -35,7 +35,7 @@
 + **提供百分比布局，支持PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout**
 
 ## 此框架目前用于以下应用
-|TCL Connect|TPMS|科兹莫|北斗益智|北斗图书|
+|TCL Connect|Orange TPMS|文山湖 科兹莫|文山湖 北斗益智|文山湖 北斗图书|
 |:-----------:|:-----:|:---------:|:---------:|:---------:|
 |<a href="https://play.google.com/store/apps/details?id=com.trackerandroid.trackerandroid"><img src="image/TCLConnect.png" width = "100px"/></a> | <a href="http://www.orange-electronic.com"><img src="image/TPMS.png" width = "100px"/> </a>|<a href="https://www.wenshanhu.com"> <img src="image/SteamLession.png" width = "100px"/> </a> | <a href="https://www.wenshanhu.com"> <img src="image/SteamPen.png" width = "100px"/></a> | <a href="https://www.wenshanhu.com"><img src="image/SteamBook.png" width = "100px"/></a>
 
