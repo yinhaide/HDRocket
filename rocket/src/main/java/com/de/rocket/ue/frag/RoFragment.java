@@ -22,7 +22,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.de.rocket.R;
-import com.de.rocket.bean.AnimationBean;
 import com.de.rocket.cons.RoKey;
 import com.de.rocket.helper.FragHelper;
 import com.de.rocket.helper.LocaleHelper;
@@ -32,6 +31,7 @@ import com.de.rocket.helper.ViewInjectHelper;
 import com.de.rocket.helper.PermissionHelper;
 import com.de.rocket.ue.activity.RoActivity;
 import com.de.rocket.helper.ToastHelper;
+import com.de.rocket.ue.animation.FragAnimation;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -318,9 +318,9 @@ public abstract class RoFragment extends Fragment {
      * @param isTargetReload 是否要刷新目标Fragment
      * @param object 跳转携带的参数
      * @param clearTop 清掉目标Fragment在栈位置顶端所有的Fragment
-     * @param animationBean 转场动画
+     * @param fragAnimation 转场动画
      */
-    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, AnimationBean animationBean) {
+    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, FragAnimation fragAnimation) {
         if(!isAdded()){//如果Fragment没有存在Activity中，不应该执行页面切换动作
             return;
         }
@@ -342,7 +342,7 @@ public abstract class RoFragment extends Fragment {
                 clearTop,
                 object,
                 activity.getActivityParamBean().getRoFragments(),
-                animationBean);
+                fragAnimation);
         //跳转成功先锁住
         if(result){
             toFragEnable = false;
@@ -455,7 +455,7 @@ public abstract class RoFragment extends Fragment {
      * @param object 传递对象
      * @param animationBean 转场动画
      */
-    public void back(boolean isTargetReload, Object object,AnimationBean animationBean) {
+    public void back(boolean isTargetReload, Object object,FragAnimation fragAnimation) {
         if(!isAdded()){//如果Fragment没有存在Activity中，不应该执行页面切换动作
             return;
         }
@@ -485,7 +485,7 @@ public abstract class RoFragment extends Fragment {
                             false,
                             object,
                             activity.getActivityParamBean().getRoFragments(),
-                            animationBean);
+                            fragAnimation);
                     //跳转成功先锁住
                     if(result){
                         toFragEnable = false;

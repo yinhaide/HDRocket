@@ -5,11 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.de.rocket.app.R;
-import com.de.rocket.bean.AnimationBean;
+import com.de.rocket.ue.animation.FragAnimation;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.ue.injector.BindView;
-
-import java.util.PrimitiveIterator;
 
 /**
  * 动画详情页
@@ -22,7 +20,7 @@ public class Frag_rocket_anim_detail extends RoFragment {
     @BindView(R.id.tv_title)
     private TextView tvTitle;
 
-    private AnimationBean animationBean;
+    private FragAnimation fragAnimation;
 
     @Override
     public int onInflateLayout() {
@@ -43,7 +41,7 @@ public class Frag_rocket_anim_detail extends RoFragment {
 
     @Override
     public boolean onBackPressed(){
-        back(false,null,animationBean);
+        back(false,null,fragAnimation);
         return true;
     }
 
@@ -67,10 +65,10 @@ public class Frag_rocket_anim_detail extends RoFragment {
 
     @Override
     public void onNexts(Object object) {
-        if(object instanceof AnimationBean){
-            animationBean = (AnimationBean)object;
-            tvContent.setText(animationBean.toString());
-            toast(animationBean.toString());
+        if(object instanceof FragAnimation){
+            fragAnimation = (FragAnimation)object;
+            tvContent.setText(fragAnimation.toString());
+            toast(fragAnimation.toString());
         }
     }
 }

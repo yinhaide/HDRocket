@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
-import com.de.rocket.bean.AnimationBean;
 import com.de.rocket.cons.RoKey;
 import com.de.rocket.ue.activity.RoActivity;
+import com.de.rocket.ue.animation.FragAnimation;
 import com.de.rocket.ue.frag.RoFragment;
 import com.de.rocket.utils.RoLogUtil;
 
@@ -98,7 +98,7 @@ public class FragHelper {
      * Fragment切换
      * @return 是否切换成功
      */
-    public boolean transfer(RoActivity activity, Class originalClazz, Class targetClazz, @IdRes int containid, boolean isOriginalRemove, boolean isTargetReload, boolean clearTop, Object object, Class[] tags, AnimationBean animationBean) {
+    public boolean transfer(RoActivity activity, Class originalClazz, Class targetClazz, @IdRes int containid, boolean isOriginalRemove, boolean isTargetReload, boolean clearTop, Object object, Class[] tags, FragAnimation fragAnimation) {
         //重要参数不能为空
         if (activity == null || originalClazz == null || tags == null || targetClazz == null)
             throw new RuntimeException("transfer params must not be null");
@@ -124,18 +124,18 @@ public class FragHelper {
             String targetTag = targetClazz.getSimpleName();
             RoFragment targetFragment = (RoFragment) fm.findFragmentByTag(targetTag);
             //如果设置了转场动画,需要刷新页面,isTargetReload强制设置为true
-            if(animationBean != null){
+            if(fragAnimation != null){
                 isTargetReload = true;
                 if(targetFragment != null && targetFragment.getArguments() != null){
                     object = targetFragment.getArguments().getSerializable(RoKey.ARGUMENT_OBJECT_KEY);
                 }
             }
             //设置转场动画
-            if(animationBean != null){
-                if(animationBean.getTransitionID() > 0){
-                    ft.setTransition(animationBean.getTransitionID());
+            if(fragAnimation != null){
+                if(fragAnimation.getTransitionType() > 0){
+                    ft.setTransition(fragAnimation.getTransitionType());
                 }else{
-                    ft.setCustomAnimations(animationBean.getEnter(), animationBean.getExit());
+                    ft.setCustomAnimations(fragAnimation.getEnter(), fragAnimation.getExit());
                 }
             }
             /* *************************** 处理转场动画 ******************************* */
