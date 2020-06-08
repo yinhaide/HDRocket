@@ -82,7 +82,7 @@ allprojects {
 ```
 在应用级别的**build.gradle**添加
 ```
-api 'com.github.yinhaide:Rocket-master:0.0.3'
+api 'com.github.yinhaide:Rocket-master:0.0.4'
 ```
 
 ### 工程配置
@@ -213,21 +213,23 @@ public class Rofragment{
     /**
      * 带详细参数跳转到新的Fragment
      * @param targetClass 目标Fragment
-     * @param isOriginalRemove 是否要回收内存
-     * @param isTargetReload 是否要刷新目标Fragment
-     * @param object 跳转携带的参数
-     * @param clearTop 清掉目标Fragment在栈位置顶端所有的Fragment
-     * @param animationBean 转场动画
      */
-    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, AnimationBean animationBean);
+    public void toFrag(@NonNull Class targetClass);
+    
+    /**
+     * 带详细参数跳转到新的Fragment
+     * @param targetClass 目标Fragment
+     * @param fragParamBean 跳转策略参数，采用Builder设计模式                   
+     */
+    public void toFrag(@NonNull Class targetClass, FragParamBean fragParamBean);
 
     /**
      * 带详细参数返回（默认无需主动调用，系统自行返回，除非需要自定义返回，需要重写onBackPresss）
      * @param isTargetReload 刷新目标页面
      * @param object 传递对象
-     * @param animationBean 转场动画
+     * @param fragAnimation 转场动画，采用策略设计模式
      */
-    public void back(boolean isTargetReload, Object object,AnimationBean animationBean);
+    public void back(boolean isTargetReload, Object object,FragAnimation fragAnimation);
 
     /**
      * 从Fragment中显示跳转到Activity
@@ -390,26 +392,50 @@ public class xxfragment{
 > 支持PercentRelativeLayout、PercentLinearLayout和PercentFrameLayout百分比布局，支持%s、%sh、%w、%sw的实时预览，支持Scrollview+PercentxxxLayout百分比滚动。
 + 支持的百分比参数
 ```xml
-<declare-styleable name="PercentLayout_Layout">
-    <attr format="string" name="layout_widthPercent"/>
-    <attr format="string" name="layout_heightPercent"/>
-    <attr format="string" name="layout_marginPercent"/>
-    <attr format="string" name="layout_marginLeftPercent"/>
-    <attr format="string" name="layout_marginTopPercent"/>
-    <attr format="string" name="layout_marginRightPercent"/>
-    <attr format="string" name="layout_marginBottomPercent"/>
-    <attr format="string" name="layout_marginStartPercent"/>
-    <attr format="string" name="layout_marginEndPercent"/>
-    <attr format="string" name="layout_textSizePercent"/>
-    <attr format="string" name="layout_maxWidthPercent"/>
-    <attr format="string" name="layout_maxHeightPercent"/>
-    <attr format="string" name="layout_minWidthPercent"/>
-    <attr format="string" name="layout_minHeightPercent"/>
-    <attr format="string" name="layout_paddingPercent"/>
-    <attr format="string" name="layout_paddingTopPercent"/>
-    <attr format="string" name="layout_paddingBottomPercent"/>
-    <attr format="string" name="layout_paddingLeftPercent"/>
-    <attr format="string" name="layout_paddingRightPercent"/>
+<!-- 百分比布局属性 -->
+<declare-styleable name="PercentLayout">
+    <!-- 宽度 -->
+    <attr name="layout_widthPercent" format="string"/>
+    <!-- 高度 -->
+    <attr name="layout_heightPercent" format="string"/>
+    <!-- 外间距 -->
+    <attr name="layout_marginPercent" format="string"/>
+    <!-- 左外间距 -->
+    <attr name="layout_marginLeftPercent" format="string"/>
+    <!-- 上外间距 -->
+    <attr name="layout_marginTopPercent" format="string"/>
+    <!-- 右外间距 -->
+    <attr name="layout_marginRightPercent" format="string"/>
+    <!-- 下外间距 -->
+    <attr name="layout_marginBottomPercent" format="string"/>
+    <!-- 左外间距(中东国家适用) -->
+    <attr name="layout_marginStartPercent" format="string"/>
+    <!-- 右外间距(中东国家适用) -->
+    <attr name="layout_marginEndPercent" format="string"/>
+    <!-- 文字高度 -->
+    <attr name="layout_textSizePercent" format="string"/>
+    <!-- 最大宽度 -->
+    <attr name="layout_maxWidthPercent" format="string"/>
+    <!-- 最大高度 -->
+    <attr name="layout_maxHeightPercent" format="string"/>
+    <!-- 最小宽度 -->
+    <attr name="layout_minWidthPercent" format="string"/>
+    <!-- 最小高度 -->
+    <attr name="layout_minHeightPercent" format="string"/>
+    <!-- 内间距 -->
+    <attr name="layout_paddingPercent" format="string"/>
+    <!-- 内上间距 -->
+    <attr name="layout_paddingTopPercent" format="string"/>
+    <!-- 内下间距 -->
+    <attr name="layout_paddingBottomPercent" format="string"/>
+    <!-- 内左间距 -->
+    <attr name="layout_paddingLeftPercent" format="string"/>
+    <!-- 内右间距 -->
+    <attr name="layout_paddingRightPercent" format="string"/>
+    <!-- 内左间距(中东国家适用) -->
+    <attr name="layout_paddingStartPercent" format="string"/>
+    <!-- 内右间距(中东国家适用) -->
+    <attr name="layout_paddingEndPercent" format="string"/>
 </declare-styleable>
 ```
 + 百分比布局实战建议

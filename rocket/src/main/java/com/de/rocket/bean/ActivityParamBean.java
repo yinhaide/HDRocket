@@ -5,6 +5,10 @@ import com.de.rocket.ue.frag.DefaultFragment;
 
 import java.util.Arrays;
 
+/**
+ * Activity参数集合
+ * Created by haide.yin(haide.yin@tcl.com) on 2019/10/14 10:07.
+ */
 public class ActivityParamBean extends RoBean {
 
     private boolean isSaveInstanceState;//Activity恢复是是否从保存的状态中恢复，false的话整个页面重新创建显示第一个Fragment

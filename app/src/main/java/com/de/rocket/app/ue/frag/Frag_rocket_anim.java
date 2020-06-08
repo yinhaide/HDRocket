@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.de.rocket.app.R;
 import com.de.rocket.app.ue.activity.RoxxActivity;
+import com.de.rocket.bean.FragParamBean;
 import com.de.rocket.ue.animation.BottomBothFragAnimation;
 import com.de.rocket.ue.animation.BottomPushFragAnimation;
 import com.de.rocket.ue.animation.LeftBothFragAnimation;
@@ -63,41 +64,89 @@ public class Frag_rocket_anim extends RoFragment {
 
     @Event(R.id.bt_anim_left_to_right)
     private void animLeftToRight(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true, new RightBothFragAnimation(),false,new LeftBothFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new RightBothFragAnimation())
+                .fragAnimation(new LeftBothFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_left_to_right_enter)
     private void animLeftToRightEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new RightPushFragAnimation(),false,new LeftPushFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new RightPushFragAnimation())
+                .fragAnimation(new LeftPushFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_right_to_left)
     private void animRightToLeft(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new LeftBothFragAnimation(),false,new RightBothFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new LeftBothFragAnimation())
+                .fragAnimation(new RightBothFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_right_to_left_enter)
     private void animRightToLeftEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new LeftPushFragAnimation(),false,new RightPushFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new LeftPushFragAnimation())
+                .fragAnimation(new RightPushFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_up_to_down)
     private void animUpToDown(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new BottomBothFragAnimation(),false,new TopBothFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new BottomBothFragAnimation())
+                .fragAnimation(new TopBothFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_up_to_down_enter)
     private void animUpToDownEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new BottomPushFragAnimation(),false,new TopPushFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new BottomPushFragAnimation())
+                .fragAnimation(new TopPushFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_down_to_up)
     private void animDownToUp(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new TopBothFragAnimation(),false,new BottomBothFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new TopBothFragAnimation())
+                .fragAnimation(new BottomBothFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 
     @Event(R.id.bt_anim_down_to_up_enter)
     private void animDownToUpEnter(TextView view) {
-        toFrag(Frag_rocket_anim_detail.class,false,true,new TopPushFragAnimation(),false,new BottomPushFragAnimation());
+        FragParamBean fragParamBean = new FragParamBean
+                .Builder()
+                .isTargetReload(true)
+                .translateObject(new TopPushFragAnimation())
+                .fragAnimation(new BottomPushFragAnimation())
+                .build();
+        toFrag(Frag_rocket_anim_detail.class,fragParamBean);
     }
 }

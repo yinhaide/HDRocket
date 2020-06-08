@@ -22,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.de.rocket.R;
+import com.de.rocket.bean.FragParamBean;
 import com.de.rocket.cons.RoKey;
 import com.de.rocket.helper.FragHelper;
 import com.de.rocket.helper.LocaleHelper;
@@ -278,37 +279,7 @@ public abstract class RoFragment extends Fragment {
      * @param targetClass 已经注册的Fragment
      */
     public void toFrag(Class targetClass) {
-        toFrag(targetClass, false, false, null);
-    }
-
-    /**
-     * 默认跳转
-     * @param targetClass 已经注册Fragment
-     */
-    public void toFrag(Class targetClass, boolean isOriginalRemove) {
-        toFrag(targetClass, isOriginalRemove, false, null);
-    }
-
-    /**
-     * 不清除栈顶跳转
-     */
-    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload) {
-        toFrag(targetClass, isOriginalRemove, isTargetReload,null,false);
-    }
-
-    /**
-     * 带详细参数默认跳转
-     */
-    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object) {
-        toFrag(targetClass, isOriginalRemove, isTargetReload, object, false,null);
-    }
-
-    /**
-     * 带详细参数默认跳转
-     * clearTop = true 时 isOriginalRemove无效,默认为: isOriginalRemove无效 = true
-     */
-    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop) {
-        toFrag(targetClass, isOriginalRemove, isTargetReload, object, clearTop,null);
+        toFrag(targetClass, new FragParamBean.Builder().build());
     }
 
     /**
@@ -320,7 +291,7 @@ public abstract class RoFragment extends Fragment {
      * @param clearTop 清掉目标Fragment在栈位置顶端所有的Fragment
      * @param fragAnimation 转场动画
      */
-    public void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, FragAnimation fragAnimation) {
+    private void toFrag(@NonNull Class targetClass, boolean isOriginalRemove, boolean isTargetReload, Object object, boolean clearTop, FragAnimation fragAnimation) {
         if(!isAdded()){//如果Fragment没有存在Activity中，不应该执行页面切换动作
             return;
         }
@@ -343,6 +314,44 @@ public abstract class RoFragment extends Fragment {
                 object,
                 activity.getActivityParamBean().getRoFragments(),
                 fragAnimation);
+        //跳转成功先锁住
+        if(result){
+            toFragEnable = false;
+        }
+    }
+
+    /**
+     * 带详细参数跳转
+     * @param targetClass 目标Fragment
+     * @param fragParamBean 页面切换参数集合
+     */
+    public void toFrag(@NonNull Class targetClass,@NonNull FragParamBean fragParamBean) {
+        //如果Fragment没有存在Activity中，不应该执行页面切换动作
+        if(!isAdded()){
+            return;
+        }
+        //必须要等待动画结束才能回退
+        if(!isAnimationEnd) {
+            return;
+        }
+        //参数不合理不跳转
+        if (fragParamBean.getTranslateObject() != null && !checkParamAvalible(targetClass, fragParamBean.getTranslateObject())) {
+            return;
+        }
+        //跳转锁住丢弃
+        if(!toFragEnable){
+            return;
+        }
+        boolean result = FragHelper.getInstance().transfer(activity,
+                aClass,
+                targetClass,
+                activity.getActivityParamBean().getFragmentContainId(),
+                fragParamBean.isOriginalRemove(),
+                fragParamBean.isTargetReload(),
+                fragParamBean.isClearTop(),
+                fragParamBean.getTranslateObject(),
+                activity.getActivityParamBean().getRoFragments(),
+                fragParamBean.getFragAnimation());
         //跳转成功先锁住
         if(result){
             toFragEnable = false;
@@ -453,7 +462,7 @@ public abstract class RoFragment extends Fragment {
      * 带详细参数返回
      * @param isTargetReload 刷新目标页面
      * @param object 传递对象
-     * @param animationBean 转场动画
+     * @param fragAnimation 转场动画
      */
     public void back(boolean isTargetReload, Object object,FragAnimation fragAnimation) {
         if(!isAdded()){//如果Fragment没有存在Activity中，不应该执行页面切换动作
