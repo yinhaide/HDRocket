@@ -172,16 +172,14 @@ public abstract class RoActivity extends FragmentActivity {
             activityParamBean = new ActivityParamBean();
         }
         this.activityParamBean = activityParamBean;
-        //检测是否都是继承Rofragment
+        //检测是否都是继承Rofragment，只要有一个不是就直接报错
         Class[] roFragments = this.activityParamBean.getRoFragments();
         if (roFragments != null && roFragments.length > 0) {
-            boolean isAvalible = false;
             for (Class mClass : roFragments) {
-                if (RoFragment.class.isAssignableFrom(mClass)) {
-                    isAvalible = true;
+                if (!RoFragment.class.isAssignableFrom(mClass)) {
+                    throw new RuntimeException(getString(R.string.rocket_fragment_extend_error));
                 }
             }
-            if (!isAvalible) throw new RuntimeException(getString(R.string.rocket_fragment_extend_error));
         }else{
             activityParamBean.setRoFragments(new Class[]{DefaultFragment.class});
         }
