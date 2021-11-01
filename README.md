@@ -3,7 +3,7 @@
 [![LICENSE](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # Rocket
-采用"单Activity+多Fragment"以及"多模块Activity+多Fragment"的设计模式编写的架构。一个非常轻量级又十分强大的Fragment管理框架。
+采用"单Activity+多Fragment"以及"多模块Activity+多Fragment"的设计模式编写的架构。一个非常轻量级又十分强大的Fragment管理框架。如果需要更轻量化的UI框架，可以参考[一个基于ViewGroup作为页面跳转单元的UI框架](https://github.com/yinhaide/Vigatom)
 
 |转场动画|路由栈视图|动态权限|
 |:-----------:|:-----:|:---------:|
